@@ -26,7 +26,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
         'HTTP-Referer': 'https://geodesist-online.vercel.app',
-        'X-Title': 'Геодезист.Онлайн',
+        'X-Title': 'Geodesist Online',
       },
       body: JSON.stringify({
         model: 'deepseek/deepseek-chat',
