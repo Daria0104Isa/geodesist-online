@@ -7,8 +7,8 @@ const config: Config = {
   tagline: 'Открытая база знаний для геодезистов',
   favicon: 'img/favicon.ico',
 
-  url: 'https://daria0104isa.github.io',
-  baseUrl: '/geodesist-online/',
+  url: 'https://geodesist-online.vercel.app',
+  baseUrl: '/',
 
   organizationName: 'Daria0104Isa',
   projectName: 'geodesist-online',
