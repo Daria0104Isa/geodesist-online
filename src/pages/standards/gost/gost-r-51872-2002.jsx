@@ -3,6 +3,7 @@ import Layout from '@theme/Layout';
 import Header from '../../../components/Header';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import StandardSpecs from '../../../components/StandardSpecs';
+import CTABlock from '../../../components/CTABlock'; 
 import BackToTop from '../../../components/BackToTop';
 
 export default function GostR518722002() {
@@ -42,14 +43,8 @@ export default function GostR518722002() {
             <li>техническом перевооружении</li>
           </ul>
 
-          <div style={{
-            background: '#FFF3E0',
-            padding: '20px',
-            borderRadius: '12px',
-            margin: '24px 0',
-            borderLeft: '4px solid #E6B422'
-          }}>
-            <p style={{ margin: 0, fontWeight: 500 }}>
+           <div style="background: #F0F4EF; padding: 20px; border-radius: 12px; margin: 24px 0;">
+            <p style="margin: 0; font-style: italic;">
               ⚠️ <strong>Важно:</strong> Исполнительная документация является обязательным приложением 
               к актам приемки выполненных работ и предъявляется органам строительного надзора.
             </p>
@@ -105,41 +100,21 @@ export default function GostR518722002() {
 
           <h2>Периодичность составления</h2>
           
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '16px',
-            margin: '20px 0'
-          }}>
-            <div style={{
-              background: '#F0F4EF',
-              padding: '16px',
-              borderRadius: '12px',
-              textAlign: 'center'
-            }}>
-              <div style={{ fontSize: '24px', marginBottom: '8px' }}>📅</div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0;">
+            <div style="background: #F0F4EF; padding: 16px; border-radius: 12px; text-align: center;">
+              <div style="font-size: 24px; margin-bottom: 8px;">📅</div>
               <strong>Ежедневно</strong>
-              <p style={{ fontSize: '13px', margin: '8px 0 0' }}>Журналы работ, полевые измерения</p>
+              <p style="font-size: 13px; margin: 8px 0 0;">Журналы работ, полевые измерения</p>
             </div>
-            <div style={{
-              background: '#F0F4EF',
-              padding: '16px',
-              borderRadius: '12px',
-              textAlign: 'center'
-            }}>
-              <div style={{ fontSize: '24px', marginBottom: '8px' }}>📆</div>
+            <div style="background: #F0F4EF; padding: 16px; border-radius: 12px; text-align: center;">
+              <div style="font-size: 24px; margin-bottom: 8px;">📆</div>
               <strong>По этапам</strong>
-              <p style={{ fontSize: '13px', margin: '8px 0 0' }}>Акты освидетельствования</p>
+              <p style="font-size: 13px; margin: 8px 0 0;">Акты освидетельствования</p>
             </div>
-            <div style={{
-              background: '#F0F4EF',
-              padding: '16px',
-              borderRadius: '12px',
-              textAlign: 'center'
-            }}>
-              <div style={{ fontSize: '24px', marginBottom: '8px' }}>📋</div>
+            <div style="background: #F0F4EF; padding: 16px; border-radius: 12px; text-align: center;">
+              <div style="font-size: 24px; margin-bottom: 8px;">📋</div>
               <strong>По окончании</strong>
-              <p style={{ fontSize: '13px', margin: '8px 0 0' }}>Сводный технический отчет</p>
+              <p style="font-size: 13px; margin: 8px 0 0;">Сводный технический отчет</p>
             </div>
           </div>
 
@@ -148,6 +123,12 @@ export default function GostR518722002() {
             Отсутствие или небрежное оформление документов может привести к задержкам ввода объекта в эксплуатацию."
           </blockquote>
         `}
+      />
+      <CTABlock 
+        title="Не нашли нужный документ?"
+        description="Отправьте запрос в Telegram-бот — мы добавим его в базу"
+        buttonText="Отправить запрос"
+        buttonLink="https://t.me/GeodezistOnlineBot"
       />
       <BackToTop />
     </Layout>

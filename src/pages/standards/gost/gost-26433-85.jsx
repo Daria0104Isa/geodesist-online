@@ -3,6 +3,7 @@ import Layout from '@theme/Layout';
 import Header from '../../../components/Header';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import StandardSpecs from '../../../components/StandardSpecs';
+import CTABlock from '../../../components/CTABlock'; 
 import BackToTop from '../../../components/BackToTop';
 
 export default function GOST2643385() {
@@ -42,13 +43,8 @@ export default function GOST2643385() {
             <li>приемку законченных объектов</li>
           </ul>
 
-          <div style={{
-            background: '#F0F4EF',
-            padding: '20px',
-            borderRadius: '12px',
-            margin: '24px 0'
-          }}>
-            <p style={{ margin: 0, fontStyle: 'italic' }}>
+          <div style="background: #F0F4EF; padding: 20px; border-radius: 12px; margin: 24px 0;">
+            <p style="margin: 0; font-style: italic;">
               💡 Стандарт является основополагающим документом для обеспечения качества 
               строительно-монтажных работ и геодезического контроля.
             </p>
@@ -96,6 +92,12 @@ export default function GOST2643385() {
             на всех этапах строительства - от выноса осей до приемки объекта в эксплуатацию."
           </blockquote>
         `}
+      />
+      <CTABlock 
+        title="Не нашли нужный документ?"
+        description="Отправьте запрос в Telegram-бот — мы добавим его в базу"
+        buttonText="Отправить запрос"
+        buttonLink="https://t.me/GeodezistOnlineBot"
       />
       <BackToTop />
     </Layout>

@@ -1,34 +1,27 @@
-/* 
----
-sidebar_position: 1
-title: Leica GS18
-description: GNSS-приёмник Leica GS18 — RTX, SmartLink, безкабельная калибровка
-image: /img/equipment/leica-gs18.jpg
----
-*/ 
-
 import React from 'react';
 import Layout from '@theme/Layout';
 import Header from '../../../components/Header';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import EquipmentSpecs from '../../../components/EquipmentSpecs';
 import BackToTop from '../../../components/BackToTop';
+import CTABlock from '../../../components/CTABlock';
+
 
 export default function LeicaGS18() {
   return (
     <Layout
-    title="Leica GS18 - GNSS-приёмник" 
-    description="GNSS-приёмник Leica GS18 — RTX, SmartLink, безкабельная калибровкак"
+      title="Leica GS18 - GNSS-приёмник" 
+      description="GNSS-приёмник Leica GS18 — RTX, SmartLink, безкабельная калибровка"
     >
       <Header />
-      
+
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px 24px 0', width: '100%' }}>
         <Breadcrumbs 
           paths={[
             { name: 'Главная', link: '/' },
             { name: 'Оборудование', link: '/equipment' },
-            { name: 'ГНСС', link: '/equipment/levels' },
-            { name: 'Sokkia SDL30', isCurrent: true }
+            { name: 'GNSS-приёмники', link: '/equipment/gnss' },
+            { name: 'Leica GS18', isCurrent: true }
           ]} 
           containerStyle={{ padding: 0, margin: 0 }} 
         />
@@ -61,6 +54,12 @@ export default function LeicaGS18() {
           { title: 'ПО', items: ['Leica Captivate', 'Leica Infinity'] },
           { title: 'Сети', items: ['RTK', 'RTX', 'SmartLink'] }
         ]}
+      />
+      <CTABlock 
+        title="Нужна помощь с выбором оборудования?"
+        description="Задайте вопрос в Telegram-боте — наши эксперты помогут подобрать прибор под ваши задачи"
+        buttonText="Спросить в Telegram"
+        buttonLink="https://t.me/GeodezistOnlineBot"
       />
       <BackToTop />
     </Layout>

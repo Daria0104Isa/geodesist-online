@@ -1,26 +1,20 @@
-/* 
----
-sidebar_position: 1
-title: Leica LS10
-description: Цифровой нивелир Leica LS10 — точность 0.3 мм/км
-image: /img/equipment/leica-ls10.jpg
----
-*/
 import React from 'react';
 import Layout from '@theme/Layout';
 import Header from '../../../components/Header';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import EquipmentSpecs from '../../../components/EquipmentSpecs';
 import BackToTop from '../../../components/BackToTop';
+import CTABlock from '../../../components/CTABlock';
+
 
 export default function LeicaLS10() {
   return (
     <Layout
-     title="Leica LS10 - Цифровой нивелир"
-     description="Цифровой нивелир Leica LS10 — точность 0.3 мм/км"
-     >
+      title="Leica LS10 - Цифровой нивелир"
+      description="Цифровой нивелир Leica LS10 — точность 0.3 мм/км"
+    >
       <Header />
-      
+
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px 24px 0', width: '100%' }}>
         <Breadcrumbs 
           paths={[
@@ -60,6 +54,12 @@ export default function LeicaLS10() {
           { title: 'Рейки', items: ['Leica GSL', 'любой штрих-код'] },
           { title: 'Экспорт', items: ['TXT', 'CSV', 'DXF'] }
         ]}
+      />
+      <CTABlock 
+        title="Нужна помощь с выбором оборудования?"
+        description="Задайте вопрос в Telegram-боте — наши эксперты помогут подобрать прибор под ваши задачи"
+        buttonText="Спросить в Telegram"
+        buttonLink="https://t.me/GeodezistOnlineBot"
       />
       <BackToTop />
     </Layout>

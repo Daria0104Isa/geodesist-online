@@ -3,9 +3,11 @@ import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import BackToTop from '../BackToTop';
 import Header from '../Header';
+import Breadcrumbs from '../Breadcrumbs';  // ← добавить импорт
 
 export default function EquipmentSpecs({ 
   hideHeader = false,
+  breadcrumbs,  // ← новый пропс
   brand, model, type, accuracy, range, weight, protection, battery, memory, display, software,
   description, documentation, issues, compatibility, similarModels, image
 }) {
@@ -34,6 +36,16 @@ export default function EquipmentSpecs({
         minHeight: '100vh'
       }}>
         <article style={{ padding: '40px 24px' }}>
+          
+          {/* Хлебные крошки — теперь ПОД шапкой, НАД контентом */}
+          {breadcrumbs && (
+            <div style={{ maxWidth: '1200px', margin: '0 auto 32px', width: '100%' }}>
+              <Breadcrumbs 
+                paths={breadcrumbs} 
+                containerStyle={{ padding: 0, margin: 0 }} 
+              />
+            </div>
+          )}
         
           {/* Кнопка назад */}
           <Link to="/equipment" style={{

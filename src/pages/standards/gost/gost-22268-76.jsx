@@ -3,6 +3,7 @@ import Layout from '@theme/Layout';
 import Header from '../../../components/Header';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import StandardSpecs from '../../../components/StandardSpecs';
+import CTABlock from '../../../components/CTABlock'; 
 import BackToTop from '../../../components/BackToTop';
 
 export default function GOST2226876() {
@@ -64,6 +65,12 @@ export default function GOST2226876() {
             </tbody>
           </table>
         `}
+      />
+      <CTABlock 
+        title="Не нашли нужный документ?"
+        description="Отправьте запрос в Telegram-бот — мы добавим его в базу"
+        buttonText="Отправить запрос"
+        buttonLink="https://t.me/GeodezistOnlineBot"
       />
       <BackToTop />
     </Layout>

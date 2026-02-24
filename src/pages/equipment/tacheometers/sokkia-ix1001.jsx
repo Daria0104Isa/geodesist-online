@@ -1,38 +1,30 @@
-/* 
----
-sidebar_position: 2
-title: Sokkia iX-1001
-description: Роботизированный тахеометр Sokkia iX-1001 — характеристики, инструкции
-image: /img/equipment/sokkia-ix1001.jpg
----
-*/
-
 import React from 'react';
 import Layout from '@theme/Layout';
 import Header from '../../../components/Header';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import EquipmentSpecs from '../../../components/EquipmentSpecs';
 import BackToTop from '../../../components/BackToTop';
+import CTABlock from '../../../components/CTABlock';
 
 export default function SokkiaiX1001() {
   return (
     <Layout 
-    title="Sokkia iX-1001 - Роботизированный тахеометр" 
-    description="Роботизированный тахеометр Sokkia iX-1001 — характеристики, инструкции"
+      title="Sokkia iX-1001 - Роботизированный тахеометр" 
+      description="Роботизированный тахеометр Sokkia iX-1001 — характеристики, инструкции"
     >
       <Header />
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px 24px 0', width: '100%' }}>
-              <Breadcrumbs 
-                paths={[
-                  { name: 'Главная', link: '/' },
-                  { name: 'Оборудование', link: '/equipment' },
-                  { name: 'Тахеометры', link: '/equipment/levels' },
-                  { name: 'Sokkia iX-1001', isCurrent: true }
-                ]} 
-                containerStyle={{ padding: 0, margin: 0 }} 
-              />
-            </div>
+        <Breadcrumbs 
+          paths={[
+            { name: 'Главная', link: '/' },
+            { name: 'Оборудование', link: '/equipment' },
+            { name: 'Тахеометры', link: '/equipment/tacheometers' },
+            { name: 'Sokkia iX-1001', isCurrent: true }
+          ]} 
+          containerStyle={{ padding: 0, margin: 0 }} 
+        />
+      </div>
 
       <EquipmentSpecs
         hideHeader={true}
@@ -63,6 +55,12 @@ export default function SokkiaiX1001() {
           { title: 'ПО', items: ['MAGNET Field', 'Sokkia Link'] },
           { title: 'Облако', items: ['Sokkia Cloud'] }
         ]}
+      />
+      <CTABlock 
+        title="Нужна помощь с выбором оборудования?"
+        description="Задайте вопрос в Telegram-боте — наши эксперты помогут подобрать прибор под ваши задачи"
+        buttonText="Спросить в Telegram"
+        buttonLink="https://t.me/GeodezistOnlineBot"
       />
       <BackToTop />
     </Layout>

@@ -640,15 +640,74 @@ a:hover {
   flex: 1 0 100% !important;
 }
 
-.equipment-specs,
-.standard-specs {
+/* Скрываем пагинацию на кастомных страницах */
+.docs-wrapper:has(.equipment-specs) .pagination-nav,
+.docs-wrapper:has(.standard-specs) .pagination-nav {
+  display: none !important;
+}
+/* Скрываем переключатель темы */
+.theme-doc-toc-desktop,
+.theme-code-block,
+.theme-back-to-top-button,
+.navbar-sidebar,
+.theme-toggle, 
+button[aria-label="Switch between dark and light mode"],
+.react-toggle,
+.themedImage {
+  display: none !important;
+}
+
+/* Если не помогло — более агрессивно */
+[class*="toggle"],
+[class*="themeToggle"] {
+  display: none !important;
+}
+/* Убираем верхний отступ и пустой блок */
+.navbar__inner,
+.navbar__items,
+.navbar__items--right,
+.navbar__brand,
+.navbar__logo,
+.navbar__title,
+.navbar__link,
+.navbar__item,
+.navbar {
+  min-height: 0 !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: none !important;
+}
+
+/* Убираем основной враппер, который создаёт отступ */
+.main-wrapper {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* На всякий случай сбрасываем все возможные контейнеры */
+header,
+[class*="navbar"],
+[class*="navbar"] *,
+[class*="theme-doc-"] {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+/* Оптимальная ширина для страниц стандартов */
+.standard-content {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+}
+/* Для оборудования */
+.equipment-specs {
   max-width: 900px !important;
   margin: 0 auto !important;
   width: 100% !important;
 }
 
-/* Скрываем пагинацию на кастомных страницах */
-.docs-wrapper:has(.equipment-specs) .pagination-nav,
-.docs-wrapper:has(.standard-specs) .pagination-nav {
-  display: none !important;
+/* Для стандартов — без ограничения ширины */
+.standard-specs {
+  margin: 0 auto !important;
+  width: 100% !important;
 }

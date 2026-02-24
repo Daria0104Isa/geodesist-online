@@ -1,25 +1,34 @@
-import React, { useState } from 'react';  // ← добавить useState
+import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import SearchModal from '../SearchModal';
 
 export default function Header() {
-  const baseUrl = useBaseUrl('');
+  const baseUrl = useBaseUrl('/');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
     <>
       <nav style={{ 
-        padding: '20px 0', 
+        padding: '20px 24px',  // ← убрал ограничение по бокам
         background: 'rgba(249, 247, 243, 0.95)',
         backdropFilter: 'blur(8px)',
         borderBottom: '1px solid rgba(167, 196, 160, 0.2)',
         position: 'sticky',
         top: 0,
-        zIndex: 100
+        zIndex: 100,
+        width: '100%'  // ← растягиваем на всю ширину
       }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ 
+          maxWidth: '1400px',  // ← увеличил максимальную ширину
+          margin: '0 auto', 
+          width: '100%'
+        }}>
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'space-between' 
+          }}>
             
             {/* Логотип слева */}
             <Link to="/" style={{ 
@@ -45,7 +54,11 @@ export default function Header() {
             </Link>
             
             {/* Навигация справа */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '32px'
+            }}>
               <Link to="/knowledge" style={{ color: '#2D5A27', textDecoration: 'none', fontWeight: 500 }}>
                 База знаний
               </Link>
@@ -69,7 +82,7 @@ export default function Header() {
                 borderRadius: '8px',
                 background: 'rgba(167, 196, 160, 0.2)'
               }}>
-                Открыть бота
+                Telegram-бот
               </Link>
               
               {/* Кнопка поиска */}

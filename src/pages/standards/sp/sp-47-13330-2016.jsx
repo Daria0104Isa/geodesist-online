@@ -3,6 +3,7 @@ import Layout from '@theme/Layout';
 import Header from '../../../components/Header';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import StandardSpecs from '../../../components/StandardSpecs';
+import CTABlock from '../../../components/CTABlock'; 
 import BackToTop from '../../../components/BackToTop';
 
 export default function Sp47133302016() {
@@ -33,19 +34,12 @@ export default function Sp47133302016() {
         description="Актуализированная версия СНиП 11-02-96. Устанавливает современные требования к инженерным изысканиям с учетом применения новых технологий: спутниковых методов, лазерного сканирования, БПЛА и цифрового моделирования."
         pdfLink="/files/sp-47-13330-2016.pdf"
         content={`
-          <div style={{
-            background: '#E8F5E9',
-            padding: '20px',
-            borderRadius: '12px',
-            margin: '0 0 24px 0',
-            border: '1px solid #A5D6A7',
-            color: '#1B5E20'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{ fontSize: '32px' }}>✅</span>
+          <div style="background: #F0F4EF; padding: 20px; border-radius: 12px; margin: 24px 0;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 32px;">✅</span>
               <div>
-                <h3 style={{ color: '#1B5E20', margin: '0 0 8px 0' }}>Действующий документ</h3>
-                <p style={{ margin: 0, fontSize: '16px' }}>
+                <h3 style="color: #1B5E20; margin: 0 0 8px 0;">Действующий документ</h3>
+                <p style="margin: 0; font-size: 16px;">
                   <strong>СП 47.13330.2016</strong> является актуализированной версией СНиП 11-02-96 
                   и обязателен к применению при выполнении инженерных изысканий.
                 </p>
@@ -57,67 +51,32 @@ export default function Sp47133302016() {
           
           <p>Настоящий свод правил распространяется на все виды инженерных изысканий:</p>
           
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '16px',
-            margin: '24px 0'
-          }}>
-            <div style={{
-              background: '#F0F4EF',
-              padding: '16px',
-              borderRadius: '12px',
-              textAlign: 'center'
-            }}>
-              <div style={{ fontSize: '28px', marginBottom: '8px' }}>🗺️</div>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 24px 0;">
+            <div style="background: #F0F4EF; padding: 16px; border-radius: 12px; text-align: center;">
+              <div style="font-size: 28px; margin-bottom: 8px;">🗺️</div>
               <strong>Геодезические</strong>
             </div>
-            <div style={{
-              background: '#F0F4EF',
-              padding: '16px',
-              borderRadius: '12px',
-              textAlign: 'center'
-            }}>
-              <div style={{ fontSize: '28px', marginBottom: '8px' }}>⛰️</div>
+            <div style="background: #F0F4EF; padding: 16px; border-radius: 12px; text-align: center;">
+              <div style="font-size: 28px; margin-bottom: 8px;">⛰️</div>
               <strong>Геологические</strong>
             </div>
-            <div style={{
-              background: '#F0F4EF',
-              padding: '16px',
-              borderRadius: '12px',
-              textAlign: 'center'
-            }}>
-              <div style={{ fontSize: '28px', marginBottom: '8px' }}>💧</div>
+            <div style="background: #F0F4EF; padding: 16px; border-radius: 12px; text-align: center;">
+              <div style="font-size: 28px; margin-bottom: 8px;">💧</div>
               <strong>Гидрометеорологические</strong>
             </div>
-            <div style={{
-              background: '#F0F4EF',
-              padding: '16px',
-              borderRadius: '12px',
-              textAlign: 'center'
-            }}>
-              <div style={{ fontSize: '28px', marginBottom: '8px' }}>🌿</div>
+            <div style="background: #F0F4EF; padding: 16px; border-radius: 12px; text-align: center;">
+              <div style="font-size: 28px; margin-bottom: 8px;">🌿</div>
               <strong>Экологические</strong>
             </div>
           </div>
 
           <h2>🚀 Нововведения (по сравнению со СНиП 11-02-96)</h2>
           
-          <div style={{
-            background: 'white',
-            borderRadius: '16px',
-            padding: '24px',
-            margin: '20px 0',
-            border: '1px solid rgba(167, 196, 160, 0.3)'
-          }}>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-              gap: '20px'
-            }}>
+          <div style="background: white; border-radius: 16px; padding: 24px; margin: 20px 0; border: 1px solid rgba(167, 196, 160, 0.3);">
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
               <div>
-                <h3 style={{ color: '#2D5A27', marginBottom: '16px' }}>📡 Современные методы</h3>
-                <ul style={{ margin: 0 }}>
+                <h3 style="color: #2D5A27; margin-bottom: 16px;">📡 Современные методы</h3>
+                <ul style="margin: 0;">
                   <li>Применение спутниковых методов (GNSS)</li>
                   <li>Лазерное сканирование (наземное, воздушное)</li>
                   <li>Беспилотные летательные аппараты (БПЛА)</li>
@@ -125,8 +84,8 @@ export default function Sp47133302016() {
                 </ul>
               </div>
               <div>
-                <h3 style={{ color: '#2D5A27', marginBottom: '16px' }}>📋 Организационные</h3>
-                <ul style={{ margin: 0 }}>
+                <h3 style="color: #2D5A27; margin-bottom: 16px;">📋 Организационные</h3>
+                <ul style="margin: 0;">
                   <li>Учет международных стандартов</li>
                   <li>Требования к цифровому документообороту</li>
                   <li>Актуализированные сроки согласований</li>
@@ -138,40 +97,40 @@ export default function Sp47133302016() {
 
           <h2>📐 Требования к точности геодезических работ</h2>
           
-          <div style={{ overflowX: 'auto', margin: '20px 0' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <div style="overflow-x: auto; margin: 20px 0;">
+            <table style="width:100%; border-collapse: collapse;">
               <thead>
-                <tr style={{ backgroundColor: '#F0F4EF' }}>
-                  <th style={{ padding: '12px', border: '1px solid #D4DCCD' }}>Масштаб съемки</th>
-                  <th style={{ padding: '12px', border: '1px solid #D4DCCD' }}>СКП плановые, мм</th>
-                  <th style={{ padding: '12px', border: '1px solid #D4DCCD' }}>СКП высотные, мм</th>
-                  <th style={{ padding: '12px', border: '1px solid #D4DCCD' }}>Сечение рельефа, м</th>
+                <tr style="background-color: #F0F4EF;">
+                  <th style="padding: 12px; border: 1px solid #D4DCCD;">Масштаб съемки</th>
+                  <th style="padding: 12px; border: 1px solid #D4DCCD;">СКП плановые, мм</th>
+                  <th style="padding: 12px; border: 1px solid #D4DCCD;">СКП высотные, мм</th>
+                  <th style="padding: 12px; border: 1px solid #D4DCCD;">Сечение рельефа, м</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style={{ padding: '12px', border: '1px solid #D4DCCD', fontWeight: 500 }}>1:500</td>
-                  <td style={{ padding: '12px', border: '1px solid #D4DCCD' }}>0.5</td>
-                  <td style={{ padding: '12px', border: '1px solid #D4DCCD' }}>0.5</td>
-                  <td style={{ padding: '12px', border: '1px solid #D4DCCD' }}>0.25 - 0.5</td>
+                  <td style="padding: 12px; border: 1px solid #D4DCCD; font-weight: 500;">1:500</td>
+                  <td style="padding: 12px; border: 1px solid #D4DCCD;">0.5</td>
+                  <td style="padding: 12px; border: 1px solid #D4DCCD;">0.5</td>
+                  <td style="padding: 12px; border: 1px solid #D4DCCD;">0.25 - 0.5</td>
                 </tr>
-                <tr style={{ backgroundColor: '#F9F7F3' }}>
-                  <td style={{ padding: '12px', border: '1px solid #D4DCCD', fontWeight: 500 }}>1:1000</td>
-                  <td style={{ padding: '12px', border: '1px solid #D4DCCD' }}>0.5</td>
-                  <td style={{ padding: '12px', border: '1px solid #D4DCCD' }}>1.0</td>
-                  <td style={{ padding: '12px', border: '1px solid #D4DCCD' }}>0.5</td>
+                <tr style="background-color: #F9F7F3;">
+                  <td style="padding: 12px; border: 1px solid #D4DCCD; font-weight: 500;">1:1000</td>
+                  <td style="padding: 12px; border: 1px solid #D4DCCD;">0.5</td>
+                  <td style="padding: 12px; border: 1px solid #D4DCCD;">1.0</td>
+                  <td style="padding: 12px; border: 1px solid #D4DCCD;">0.5</td>
                 </tr>
                 <tr>
-                  <td style={{ padding: '12px', border: '1px solid #D4DCCD', fontWeight: 500 }}>1:2000</td>
-                  <td style={{ padding: '12px', border: '1px solid #D4DCCD' }}>1.0</td>
-                  <td style={{ padding: '12px', border: '1px solid #D4DCCD' }}>2.0</td>
-                  <td style={{ padding: '12px', border: '1px solid #D4DCCD' }}>0.5 - 1.0</td>
+                  <td style="padding: 12px; border: 1px solid #D4DCCD; font-weight: 500;">1:2000</td>
+                  <td style="padding: 12px; border: 1px solid #D4DCCD;">1.0</td>
+                  <td style="padding: 12px; border: 1px solid #D4DCCD;">2.0</td>
+                  <td style="padding: 12px; border: 1px solid #D4DCCD;">0.5 - 1.0</td>
                 </tr>
-                <tr style={{ backgroundColor: '#F9F7F3' }}>
-                  <td style={{ padding: '12px', border: '1px solid #D4DCCD', fontWeight: 500 }}>1:5000</td>
-                  <td style={{ padding: '12px', border: '1px solid #D4DCCD' }}>2.0</td>
-                  <td style={{ padding: '12px', border: '1px solid #D4DCCD' }}>2.5</td>
-                  <td style={{ padding: '12px', border: '1px solid #D4DCCD' }}>1.0 - 2.0</td>
+                <tr style="background-color: #F9F7F3;">
+                  <td style="padding: 12px; border: 1px solid #D4DCCD; font-weight: 500;">1:5000</td>
+                  <td style="padding: 12px; border: 1px solid #D4DCCD;">2.0</td>
+                  <td style="padding: 12px; border: 1px solid #D4DCCD;">2.5</td>
+                  <td style="padding: 12px; border: 1px solid #D4DCCD;">1.0 - 2.0</td>
                 </tr>
               </tbody>
             </table>
@@ -179,87 +138,16 @@ export default function Sp47133302016() {
 
           <h2>🔄 Структура изысканий по СП 47.13330.2016</h2>
           
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            margin: '30px 0',
-            position: 'relative'
-          }}>
-            <div style={{
-              width: '100%',
-              height: '2px',
-              background: '#A7C4A0',
-              position: 'absolute',
-              top: '25px',
-              zIndex: 1
-            }} />
-            
-            <div style={{
-              background: '#2D5A27',
-              color: 'white',
-              width: '50px',
-              height: '50px',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 'bold',
-              fontSize: '20px',
-              zIndex: 2,
-              position: 'relative'
-            }}>1</div>
-            <div style={{
-              background: '#2D5A27',
-              color: 'white',
-              width: '50px',
-              height: '50px',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 'bold',
-              fontSize: '20px',
-              zIndex: 2,
-              position: 'relative'
-            }}>2</div>
-            <div style={{
-              background: '#2D5A27',
-              color: 'white',
-              width: '50px',
-              height: '50px',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 'bold',
-              fontSize: '20px',
-              zIndex: 2,
-              position: 'relative'
-            }}>3</div>
-            <div style={{
-              background: '#2D5A27',
-              color: 'white',
-              width: '50px',
-              height: '50px',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 'bold',
-              fontSize: '20px',
-              zIndex: 2,
-              position: 'relative'
-            }}>4</div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin: 30px 0; position: relative;">
+            <div style="width: 100%; height: 2px; background: #A7C4A0; position: absolute; top: 25px; z-index: 1;"></div>
+  
+            <div style="background: #2D5A27; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; z-index: 2; position: relative;">1</div>
+            <div style="background: #2D5A27; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; z-index: 2; position: relative;">2</div>
+            <div style="background: #2D5A27; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; z-index: 2; position: relative;">3</div>
+            <div style="background: #2D5A27; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; z-index: 2; position: relative;">4</div>
           </div>
-          
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '16px',
-            marginTop: '16px',
-            textAlign: 'center'
-          }}>
+
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px; text-align: center;">
             <div><strong>Подготовительный этап</strong></div>
             <div><strong>Полевые работы</strong></div>
             <div><strong>Камеральная обработка</strong></div>
@@ -268,13 +156,8 @@ export default function Sp47133302016() {
 
           <h2>📋 Состав технического отчета</h2>
           
-          <div style={{
-            background: '#F0F4EF',
-            padding: '20px',
-            borderRadius: '12px',
-            margin: '20px 0'
-          }}>
-            <ul style={{ columns: 2, columnGap: '40px' }}>
+          <div style="background: #F0F4EF; padding: 20px; border-radius: 12px; margin: 20px 0;">
+            <ul style="columns: 2; column-gap: 40px;">
               <li>Пояснительная записка</li>
               <li>Топографические планы</li>
               <li>Каталоги координат и высот</li>
@@ -291,6 +174,12 @@ export default function Sp47133302016() {
             учитывают современные технологии и обеспечивают высокое качество проектных решений."
           </blockquote>
         `}
+      />
+      <CTABlock 
+        title="Не нашли нужный документ?"
+        description="Отправьте запрос в Telegram-бот — мы добавим его в базу"
+        buttonText="Отправить запрос"
+        buttonLink="https://t.me/GeodezistOnlineBot"
       />
       <BackToTop />
     </Layout>

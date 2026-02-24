@@ -3,6 +3,7 @@ import Layout from '@theme/Layout';
 import Header from '../../../components/Header';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import StandardSpecs from '../../../components/StandardSpecs';
+import CTABlock from '../../../components/CTABlock'; 
 import BackToTop from '../../../components/BackToTop';
 
 export default function Snip3010384() {
@@ -33,19 +34,12 @@ export default function Snip3010384() {
         description="Правила производства геодезических работ при строительстве зданий и сооружений. Документ утратил силу и заменён на СП 126.13330.2012."
         pdfLink="/files/snip-3-01-03-84.pdf"
         content={`
-          <div style={{
-            background: '#FFEBEE',
-            padding: '20px',
-            borderRadius: '12px',
-            margin: '0 0 24px 0',
-            border: '1px solid #FFCDD2',
-            color: '#B71C1C'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{ fontSize: '32px' }}>⚠️</span>
+          <div style="background: #F0F4EF; padding: 20px; border-radius: 12px; margin: 24px 0;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span style="font-size: 32px;">⚠️</span>
               <div>
-                <h3 style={{ color: '#B71C1C', margin: '0 0 8px 0' }}>Документ утратил силу</h3>
-                <p style={{ margin: 0, fontSize: '16px' }}>
+                <h3 style="color: #B71C1C; margin: 0 0 8px 0;">Документ утратил силу</h3>
+                <p style="margin: 0; font-size: 16px;">
                   <strong>СНиП 3.01.03-84</strong> заменён на <strong>СП 126.13330.2012</strong> 
                   "СНиП 3.01.03-84. Геодезические работы в строительстве. Актуализированная редакция".
                 </p>
@@ -53,14 +47,9 @@ export default function Snip3010384() {
             </div>
           </div>
 
-          <div style={{
-            background: '#F0F4EF',
-            padding: '20px',
-            borderRadius: '12px',
-            margin: '24px 0'
-          }}>
-            <h3 style={{ color: '#2D5A27', margin: '0 0 12px 0' }}>📌 Информация о документе</h3>
-            <p style={{ margin: 0 }}>
+          <div style="background: #F0F4EF; padding: 20px; border-radius: 12px; margin: 24px 0;">
+            <h3 style="color: #2D5A27; margin: 0 0 12px 0;">📌 Информация о документе</h3>
+            <p style="margin: 0;">
               Несмотря на замену, данный СНиП может использоваться как справочный материал 
               для понимания истории развития нормативной базы геодезических работ в строительстве. 
               Для актуальных требований следует обращаться к <strong>СП 126.13330.2012</strong>.
@@ -69,7 +58,7 @@ export default function Snip3010384() {
 
           <h2>Содержание (историческое)</h2>
           
-          <ol style={{ fontSize: '16px', lineHeight: '1.8' }}>
+          <ol style="font-size: 16px; line-height: 1.8;">
             <li><strong>Общие положения</strong> — область применения, нормативные ссылки</li>
             <li><strong>Геодезические работы при строительстве</strong> — создание разбивочной основы, вынос осей</li>
             <li><strong>Контроль точности</strong> — допуски и методы контроля геометрических параметров</li>
@@ -85,13 +74,8 @@ export default function Snip3010384() {
             <li>Обязательное закрепление осей знаками вне зоны работ</li>
           </ul>
 
-          <div style={{
-            background: '#FFF3E0',
-            padding: '16px',
-            borderRadius: '8px',
-            margin: '24px 0'
-          }}>
-            <p style={{ margin: 0, fontStyle: 'italic' }}>
+          <div style="background: #FFF3E0; padding: 16px; border-radius: 8px; margin: 24px 0;">
+            <p style="margin: 0; font-style: italic;">
               💡 <strong>Для сравнения:</strong> В актуальном СП 126.13330.2012 требования к точности 
               были пересмотрены с учётом современных приборов и методов измерений. 
               Допуски стали более жёсткими для высокоточных работ.
@@ -111,6 +95,12 @@ export default function Snip3010384() {
             и тенденции их ужесточения с развитием технологий."
           </blockquote>
         `}
+      />
+      <CTABlock 
+        title="Не нашли нужный документ?"
+        description="Отправьте запрос в Telegram-бот — мы добавим его в базу"
+        buttonText="Отправить запрос"
+        buttonLink="https://t.me/GeodezistOnlineBot"
       />
       <BackToTop />
     </Layout>

@@ -4,16 +4,24 @@ import Link from '@docusaurus/Link';
 import { supabase } from '../../supabaseClient';
 import Header from '../../components/Header';
 import BackToTop from '../../components/BackToTop';
-import Breadcrumbs from '../../components/Breadcrumbs'; 
+import Breadcrumbs from '../../components/Breadcrumbs';
 
 export default function ForumPage() {
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('approved'); // approved, pending, all
+  const [filter, setFilter] = useState('approved');
+  const [isModerator, setIsModerator] = useState(false);
 
   useEffect(() => {
     fetchTopics();
   }, [filter]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      setIsModerator(urlParams.get('mod') === 'geodezist2026');
+    }
+  }, []);  // ← здесь была пропущена закрывающая скобка
 
   const fetchTopics = async () => {
     setLoading(true);
@@ -42,14 +50,12 @@ export default function ForumPage() {
     const date = new Date(dateString);
     return date.toLocaleDateString('ru-RU');
   };
-  const isModerator = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('mod') === 'geodezist2026';
-  };
+
   return (
     <Layout title="Форум" description="Вопросы и ответы по геодезии">
       <Header />
-       {/* Хлебные крошки с правильными отступами */}
+      
+      {/* Хлебные крошки */}
       <div style={{ 
         maxWidth: '1200px', 
         margin: '0 auto', 
@@ -119,7 +125,7 @@ export default function ForumPage() {
         </div>
 
         {/* Фильтры — видны только модератору */}
-        {isModerator() && (
+        {isModerator && (
           <div style={{ 
             display: 'flex', 
             gap: '12px', 
@@ -240,7 +246,8 @@ export default function ForumPage() {
             )}
           </div>
         )}
-        {/* Кнопка назад — ПЕРЕНЕСЕНА ВНИЗ */}
+        
+        {/* Кнопка назад */}
         <div style={{ marginTop: '32px', textAlign: 'center' }}>
           <Link
             to="/community"

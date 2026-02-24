@@ -80,27 +80,27 @@ const standardsData = [
 ];
 
 export default function StandardsGrid({ filter, search }) {
-  
-  // Внутренние состояния и categories больше не нужны
-
   const filteredStandards = standardsData
-  .filter(item => filter === 'all' || item.category === filter)
-  .filter(item => 
-    (item.title?.toLowerCase() || '').includes(search.toLowerCase()) ||
-    (item.name?.toLowerCase() || '').includes(search.toLowerCase()) ||
-    (item.description?.toLowerCase() || '').includes(search.toLowerCase())
-  );
-
+    .filter(item => filter === 'all' || item.category === filter)
+    .filter(item => 
+      (item.title?.toLowerCase() || '').includes(search.toLowerCase()) ||
+      (item.name?.toLowerCase() || '').includes(search.toLowerCase()) ||
+      (item.description?.toLowerCase() || '').includes(search.toLowerCase())
+    );
 
   const getStatusColor = (status) => {
     return status === 'действует' ? '#2D5A27' : '#B85C1F';
   };
-console.log('filter:', filter);
-console.log('первый элемент:', standardsData[0]);
+
   return (
     <div style={{ marginTop: '32px' }}>
       {/* Сетка карточек */}
-      <div className="standards-grid">
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        gap: '32px',  // ← увеличено с 24px до 32px
+        width: '100%'
+      }}>
         {filteredStandards.map(item => (
           <Link
             key={item.id}
@@ -110,13 +110,17 @@ console.log('первый элемент:', standardsData[0]);
             <div style={{
               background: 'white',
               borderRadius: '16px',
-              padding: '24px',
+              padding: '32px',  // ← увеличено с 24px до 32px
               border: '1px solid rgba(167, 196, 160, 0.3)',
               transition: 'transform 0.2s, boxShadow 0.2s',
               cursor: 'pointer',
               height: '100%',
               width: '100%',
-              boxSizing: 'border-box'
+              boxSizing: 'border-box',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              minHeight: '280px'  // ← добавлено
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-4px)';
@@ -127,29 +131,31 @@ console.log('первый элемент:', standardsData[0]);
               e.currentTarget.style.boxShadow = 'none';
             }}>
               
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-                <h3 style={{ fontSize: '20px', color: '#2D5A27', margin: 0, fontWeight: 600 }}>
-                  {item.title}
-                </h3>
-                <span style={{
-                  background: '#A7C4A0',
-                  color: '#1A3C17',
-                  padding: '4px 12px',
-                  borderRadius: '20px',
-                  fontSize: '13px',
-                  fontWeight: 500
-                }}>
-                  {item.categoryName}
-                </span>
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                  <h3 style={{ fontSize: '20px', color: '#2D5A27', margin: 0, fontWeight: 600 }}>
+                    {item.title}
+                  </h3>
+                  <span style={{
+                    background: '#A7C4A0',
+                    color: '#1A3C17',
+                    padding: '4px 12px',
+                    borderRadius: '20px',
+                    fontSize: '13px',
+                    fontWeight: 500
+                  }}>
+                    {item.categoryName}
+                  </span>
+                </div>
+
+                <h4 style={{ fontSize: '16px', color: '#4A5A4A', marginBottom: '12px', fontWeight: 500 }}>
+                  {item.name}
+                </h4>
+
+                <p style={{ color: '#6B776D', fontSize: '14px', marginBottom: '16px', lineHeight: '1.5' }}>
+                  {item.description}
+                </p>
               </div>
-
-              <h4 style={{ fontSize: '16px', color: '#4A5A4A', marginBottom: '12px', fontWeight: 500 }}>
-                {item.name}
-              </h4>
-
-              <p style={{ color: '#6B776D', fontSize: '14px', marginBottom: '16px', lineHeight: '1.5' }}>
-                {item.description}
-              </p>
 
               <div style={{
                 display: 'flex',
@@ -157,7 +163,8 @@ console.log('первый элемент:', standardsData[0]);
                 alignItems: 'center',
                 borderTop: '1px solid #EDF3EA',
                 paddingTop: '16px',
-                fontSize: '14px'
+                fontSize: '14px',
+                marginTop: 'auto'
               }}>
                 <span style={{ color: '#6B776D' }}>
                   Год: {item.year}

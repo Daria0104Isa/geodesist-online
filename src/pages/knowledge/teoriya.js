@@ -1,5 +1,6 @@
 import React from 'react';
 import Layout from '@theme/Layout';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import CategoryPage from '../../components/CategoryPage';
 
 const articles = [

@@ -1,24 +1,24 @@
 import React from 'react';
 import Link from '@docusaurus/Link';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import Header from '../Header';
 import Breadcrumbs from '../Breadcrumbs';
 
 export default function CategoryPage({ categoryName, articles, breadcrumbs }) {
+  const baseUrl = useBaseUrl('');
+
   return (
     <div style={{ backgroundColor: '#f9f7f3', minHeight: '100vh' }}>
       <Header />
       
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}> 
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px 24px' }}>
         
         {/* Хлебные крошки */}
         {breadcrumbs && (
           <div style={{ marginBottom: '16px' }}>
             <Breadcrumbs 
               paths={breadcrumbs} 
-              containerStyle={{ 
-                padding: 0,  // убираем внутренние отступы
-                margin: 0 
-              }} 
+              containerStyle={{ padding: 0, margin: 0 }} 
             />
           </div>
         )}
@@ -33,7 +33,7 @@ export default function CategoryPage({ categoryName, articles, breadcrumbs }) {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '8px',
-             fontSize: '15px',
+              fontSize: '15px',
               fontWeight: 500
             }}
           >
@@ -41,7 +41,7 @@ export default function CategoryPage({ categoryName, articles, breadcrumbs }) {
               <path d="M19 12H5" strokeWidth="2"/>
               <path d="M12 19L5 12L12 5" strokeWidth="2"/>
             </svg>
-            Назад к категориям
+            ← Назад к категориям
           </Link>
         </div>
 

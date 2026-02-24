@@ -1,33 +1,25 @@
-/* 
----
-sidebar_position: 2
-title: Sokkia GCX3
-description: GNSS-приёмник Sokkia GCX3 — 555 каналов, встроенный модем
-image: /img/equipment/sokkia-gcx3.jpg
----
-*/ 
-
 import React from 'react';
 import Layout from '@theme/Layout';
 import Header from '../../../components/Header';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import EquipmentSpecs from '../../../components/EquipmentSpecs';
 import BackToTop from '../../../components/BackToTop';
+import CTABlock from '../../../components/CTABlock';
 
 export default function SokkiaGCX3() {
   return (
     <Layout
-    title="Sokkia GCX3 - GNSS-приёмник" 
-    description="GNSS-приёмник Sokkia GCX3 — 555 каналов, встроенный модем"
+      title="Sokkia GCX3 - GNSS-приёмник" 
+      description="GNSS-приёмник Sokkia GCX3 — 555 каналов, встроенный модем"
     >
       <Header />
-      
+
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px 24px 0', width: '100%' }}>
         <Breadcrumbs 
           paths={[
             { name: 'Главная', link: '/' },
             { name: 'Оборудование', link: '/equipment' },
-            { name: 'ГНСС', link: '/equipment/levels' },
+            { name: 'GNSS-приёмники', link: '/equipment/gnss' },
             { name: 'Sokkia GCX3', isCurrent: true }
           ]} 
           containerStyle={{ padding: 0, margin: 0 }} 
@@ -56,10 +48,16 @@ export default function SokkiaGCX3() {
           { problem: 'Ошибка SD-карты', cause: 'Форматирование', solution: 'Отформатировать в FAT32' }
         ]}
         compatibility={[
-         { title: 'Контроллеры', items: ['Sokkia SHC-5000'] },
+          { title: 'Контроллеры', items: ['Sokkia SHC-5000'] },
           { title: 'ПО', items: ['MAGNET Field', 'Sokkia Link'] },
           { title: 'Модемы', items: ['UHF', '4G'] }
         ]}
+      />
+      <CTABlock 
+        title="Нужна помощь с выбором оборудования?"
+        description="Задайте вопрос в Telegram-боте — наши эксперты помогут подобрать прибор под ваши задачи"
+        buttonText="Спросить в Telegram"
+        buttonLink="https://t.me/GeodezistOnlineBot"
       />
       <BackToTop />
     </Layout>

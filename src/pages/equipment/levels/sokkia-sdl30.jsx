@@ -1,27 +1,19 @@
-/* 
----
-sidebar_position: 2
-title: Sokkia SDL30
-description: Цифровой нивелир Sokkia SDL30 — память 10 000 точек
-image: /img/equipment/sokkia-sdl30.jpg
----
-*/ 
-
 import React from 'react';
 import Layout from '@theme/Layout';
 import Header from '../../../components/Header';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import EquipmentSpecs from '../../../components/EquipmentSpecs';
 import BackToTop from '../../../components/BackToTop';
+import CTABlock from '../../../components/CTABlock';
 
 export default function SokkiaSDL30() {
   return (
     <Layout
-    title="Sokkia SDL30 - Цифровой нивелир" 
-    description="Цифровой нивелир Sokkia SDL30 — память 10 000 точек"
+      title="Sokkia SDL30 - Цифровой нивелир" 
+      description="Цифровой нивелир Sokkia SDL30 — память 10 000 точек"
     >
       <Header />
-      
+
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px 24px 0', width: '100%' }}>
         <Breadcrumbs 
           paths={[
@@ -61,6 +53,12 @@ export default function SokkiaSDL30() {
           { title: 'Рейки', items: ['Sokkia BIS30/50'] },
           { title: 'Экспорт', items: ['SD-карта', 'RS-232'] }
         ]}
+      />
+      <CTABlock 
+        title="Нужна помощь с выбором оборудования?"
+        description="Задайте вопрос в Telegram-боте — наши эксперты помогут подобрать прибор под ваши задачи"
+        buttonText="Спросить в Telegram"
+        buttonLink="https://t.me/GeodezistOnlineBot"
       />
       <BackToTop />
     </Layout>
