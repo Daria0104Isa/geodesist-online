@@ -7,14 +7,10 @@ const config: Config = {
   tagline: 'Открытая база знаний для геодезистов',
   favicon: 'img/favicon.ico',
 
-  future: {
-    v4: true,
-  },
+  url: 'https://daria0104isa.github.io',
+  baseUrl: '/geodesist-online/',
 
-  url: 'https://your-docusaurus-site.example.com',
-  baseUrl: '/',
-
-  organizationName: 'facebook',
+  organizationName: 'Daria0104Isa',
   projectName: 'geodesist-online',
 
   onBrokenLinks: 'warn',
@@ -28,12 +24,8 @@ const config: Config = {
     [
       'classic',
       {
-        docs: {
-          sidebarPath: './sidebars.ts',
-        },
-        blog: {
-          showReadingTime: true,
-        },
+        docs: false,
+        blog: false,
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -49,36 +41,63 @@ const config: Config = {
     navbar: {
       title: 'Геодезист.Онлайн',
       logo: {
-        alt: 'Логотип Геодезист.Онлайн',
-        src: 'img/logo.svg',
+        alt: 'Логотип',
+        src: 'img/logo.png',
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
-          position: 'left',
+          to: '/knowledge',
           label: 'База знаний',
+          position: 'left',
         },
         {
-          href: 'https://github.com/facebook/docusaurus',
-          label: 'GitHub',
+          to: '/calculators',
+          label: 'Калькуляторы',
+          position: 'left',
+        },
+        {
+          to: '/equipment',
+          label: 'Оборудование',
+          position: 'left',
+        },
+        {
+          to: '/standards',
+          label: 'Стандарты',
+          position: 'left',
+        },
+        {
+          to: '/community',
+          label: 'Сообщество',
+          position: 'left',
+        },
+        {
+          href: 'https://t.me/GeodezistOnlineBot',
+          label: 'Telegram-бот',
           position: 'right',
         },
       ],
     },
     footer: {
-      style: 'dark',
+      style: 'light',
       links: [
         {
           title: 'База знаний',
           items: [
             {
-              label: 'Введение',
-              to: '/docs/intro',
+              label: 'Теория и основы',
+              to: '/knowledge/teoriya',
             },
             {
-              label: 'Приборы',
-              to: '/docs/category/приборы',
+              label: 'Полевые методы',
+              to: '/knowledge/polevye-metody',
+            },
+            {
+              label: 'Оборудование',
+              to: '/equipment',
+            },
+            {
+              label: 'Стандарты',
+              to: '/standards',
             },
           ],
         },
@@ -86,12 +105,16 @@ const config: Config = {
           title: 'Сообщество',
           items: [
             {
-              label: 'Telegram',
-              href: '#',
+              label: 'Telegram-бот',
+              href: 'https://t.me/GeodezistOnlineBot',
             },
             {
-              label: 'Форум Geodesist.ru',
-              href: 'https://geodesist.ru',
+              label: 'Форум',
+              to: '/forum',
+            },
+            {
+              label: 'Предложить статью',
+              to: '/community/suggest-article',
             },
           ],
         },
@@ -100,16 +123,16 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://github.com/Daria0104Isa/geodesist-online',
             },
             {
-              label: 'Для сообщества',
-              to: '/docs/soobschestvo',
+              label: 'О проекте',
+              to: '/about',
             },
           ],
         },
       ],
-      copyright: "Copyright © 2024 Геодезист.Онлайн. Открытая база знаний.",
+      copyright: `Copyright © ${new Date().getFullYear()} Геодезист.Онлайн. Открытая база знаний.`,
     },
     prism: {
       theme: prismThemes.github,
