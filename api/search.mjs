@@ -48,6 +48,24 @@ function cosineSimilarity(vecA, vecB) {
   return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
 }
 
+// Функция для очистки текста от HTML и JSX
+function cleanText(text) {
+  if (!text) return '';
+  
+  // Удаляем HTML-теги (включая JSX-подобные)
+  let clean = text.replace(/<[^>]*>/g, ' ');
+  
+  // Удаляем лишние пробелы и переносы
+  clean = clean.replace(/\s+/g, ' ').trim();
+  
+  // Обрезаем до разумной длины (например, 300 символов)
+  if (clean.length > 300) {
+    clean = clean.substring(0, 300) + '...';
+  }
+  
+  return clean;
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   
@@ -77,7 +95,7 @@ export default async function handler(req, res) {
       .slice(0, 3);
     
     const answer = results.map(r => 
-      `📌 **${r.title}**\n${r.text.substring(0, 200)}...`
+      `📌 **${r.title}**\n${cleanText(r.text)}`
     ).join('\n\n---\n\n');
     
     res.status(200).json({ 
