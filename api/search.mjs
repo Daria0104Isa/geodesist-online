@@ -48,22 +48,16 @@ function cosineSimilarity(vecA, vecB) {
   return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
 }
 
-// Функция для очистки текста от HTML и JSX
-function cleanText(text) {
-  if (!text) return '';
+// Функция для генерации пути к статье из заголовка
+function getArticlePath(title) {
+  // Конвертируем заголовок в URL-дружественный формат
+  const slug = title
+    .toLowerCase()
+    .replace(/[^a-zа-я0-9\s-]/g, '') // удаляем спецсимволы
+    .replace(/\s+/g, '-')             // пробелы в дефисы
+    .replace(/-+/g, '-');              // убираем лишние дефисы
   
-  // Удаляем HTML-теги (включая JSX-подобные)
-  let clean = text.replace(/<[^>]*>/g, ' ');
-  
-  // Удаляем лишние пробелы и переносы
-  clean = clean.replace(/\s+/g, ' ').trim();
-  
-  // Обрезаем до разумной длины (например, 300 символов)
-  if (clean.length > 300) {
-    clean = clean.substring(0, 300) + '...';
-  }
-  
-  return clean;
+  return `/knowledge/articles/${slug}`;
 }
 
 export default async function handler(req, res) {
@@ -92,15 +86,38 @@ export default async function handler(req, res) {
         similarity: cosineSimilarity(queryEmbedding, item.embedding)
       }))
       .sort((a, b) => b.similarity - a.similarity)
-      .slice(0, 3);
+      .slice(0, 5); // берём 5 самых релевантных фрагментов
     
-    const answer = results.map(r => 
-      `📌 **${r.title}**\n${cleanText(r.text)}`
-    ).join('\n\n---\n\n');
+    // Группируем по заголовкам (чтобы одна статья не дублировалась)
+    const seenTitles = new Set();
+    const uniqueResults = [];
+    
+    for (const item of results) {
+      if (!seenTitles.has(item.title)) {
+        seenTitles.add(item.title);
+        uniqueResults.push(item);
+      }
+      if (uniqueResults.length >= 3) break; // оставляем не больше 3 статей
+    }
+    
+    // Формируем ответ в виде списка ссылок
+    let answer = '';
+    if (uniqueResults.length > 0) {
+      answer = '🔍 **Похожие темы найдены в этих статьях:**\n\n';
+      uniqueResults.forEach(item => {
+        const articlePath = getArticlePath(item.title);
+        answer += `- [${item.title}](${articlePath})\n`;
+      });
+    } else {
+      answer = '😕 По вашему запросу ничего не найдено. Попробуйте переформулировать вопрос.';
+    }
     
     res.status(200).json({ 
       answer,
-      results: results.map(r => ({ title: r.title, text: r.text }))
+      results: uniqueResults.map(r => ({ 
+        title: r.title, 
+        path: getArticlePath(r.title) 
+      }))
     });
 
   } catch (error) {
