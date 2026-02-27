@@ -1,68 +1,92 @@
-// api/search.js
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Загружаем эмбеддинги при старте
+let embeddings = [];
+try {
+  const dataPath = path.join(__dirname, '../data/embeddings.json');
+  embeddings = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+  console.log(`✅ Загружено ${embeddings.length} векторов`);
+} catch (err) {
+  console.error('❌ Не удалось загрузить embeddings.json');
+}
+
+const MISTRAL_API_KEY = process.env.MISTRAL_API_KEY;
+
+async function getQueryEmbedding(query) {
+  const response = await fetch('https://api.mistral.ai/v1/embeddings', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${MISTRAL_API_KEY}`
+    },
+    body: JSON.stringify({
+      model: 'mistral-embed',
+      input: [query]
+    })
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`Mistral API error: ${response.status} - ${error}`);
+  }
+
+  const data = await response.json();
+  return data.data[0].embedding;
+}
+
+function cosineSimilarity(vecA, vecB) {
+  let dotProduct = 0, normA = 0, normB = 0;
+  for (let i = 0; i < vecA.length; i++) {
+    dotProduct += vecA[i] * vecB[i];
+    normA += vecA[i] * vecA[i];
+    normB += vecB[i] * vecB[i];
+  }
+  return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-
+  
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   const { query } = req.body;
-
+  
   if (!query) {
     return res.status(400).json({ error: 'Query is required' });
   }
 
-  const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
-
-  if (!OPENROUTER_API_KEY) {
-    console.error('OpenRouter API key is not configured.');
-    return res.status(500).json({ error: 'API key is not configured on the server.' });
+  if (!MISTRAL_API_KEY) {
+    return res.status(500).json({ error: 'Mistral API key not configured' });
   }
 
   try {
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-        'HTTP-Referer': 'https://geodesist-online.vercel.app',
-        'X-Title': 'Geodesist Online',
-      },
-      body: JSON.stringify({
-        model: 'deepseek/deepseek-chat',
-        messages: [
-          {
-            role: 'system',
-            content: `Ты — эксперт-геодезист. Отвечай на вопросы по:
-                    - Геодезическому оборудованию (тахеометры, нивелиры, GNSS)
-                    - Методикам измерений
-                    - ГОСТам и СНиПам
-                    - Полевым работам
-                    - Обработке данных
-                    Отвечай кратко, по делу, максимум 3-4 предложения.`
-          },
-          {
-            role: 'user',
-            content: query
-          }
-        ],
-        max_tokens: 500,
-        temperature: 0.7
-      })
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.error?.message || `OpenRouter API Error: ${response.status}`);
-    }
-
-    res.status(200).json({
-      answer: data.choices[0].message.content
+    const queryEmbedding = await getQueryEmbedding(query);
+    
+    const results = embeddings
+      .map(item => ({
+        ...item,
+        similarity: cosineSimilarity(queryEmbedding, item.embedding)
+      }))
+      .sort((a, b) => b.similarity - a.similarity)
+      .slice(0, 3);
+    
+    const answer = results.map(r => 
+      `📌 **${r.title}**\n${r.text.substring(0, 200)}...`
+    ).join('\n\n---\n\n');
+    
+    res.status(200).json({ 
+      answer,
+      results: results.map(r => ({ title: r.title, text: r.text }))
     });
 
   } catch (error) {
-    console.error('OpenRouter API Error:', error);
-    res.status(500).json({ error: 'Failed to get response from AI.' });
+    console.error('Search error:', error);
+    res.status(500).json({ error: 'Failed to get response' });
   }
 }

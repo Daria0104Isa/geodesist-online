@@ -1,7 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from '@docusaurus/Link';
 
 export default function HomepageFeatures() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResult, setSearchResult] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+
+    setIsSearching(true);
+    setSearchResult('');
+
+    try {
+      const response = await fetch('/api/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: searchQuery })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Ошибка запроса');
+      }
+
+      setSearchResult(data.answer);
+    } catch (err) {
+      console.error('Ошибка:', err);
+      setSearchResult('❌ Произошла ошибка при поиске');
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
   return (
     <div style={{ backgroundColor: '#f9f7f3', minHeight: '100vh' }}>
       {/* Hero секция */}
@@ -44,37 +77,66 @@ export default function HomepageFeatures() {
               База знаний и Telegram‑бот для быстрых ответов.
             </p>
             
-            <div style={{ position: 'relative', maxWidth: '600px', margin: '0 auto' }}>
-              <input 
-                type="text" 
-                placeholder="Поиск стандартов, оборудования или расчётов..."
-                style={{
-                  width: '100%',
-                  padding: '20px 60px 20px 24px',
-                  borderRadius: '12px',
-                  border: '2px solid transparent',
-                  background: 'white',
-                  fontSize: '16px',
-                  color: '#2D5A27',
-                  outline: 'none',
-                  boxShadow: '0 12px 24px rgba(45, 90, 39, 0.08)'
-                }}
-              />
-              <button style={{
-                position: 'absolute',
-                right: '20px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer'
+           {/* Поисковая форма */}
+           <div style={{ position: 'relative', maxWidth: '600px', margin: '0 auto' }}>
+             <form onSubmit={handleSearch}>
+               <input 
+                 type="text" 
+                 value={searchQuery}
+                 onChange={(e) => setSearchQuery(e.target.value)}
+                 placeholder="Поиск стандартов, оборудования или расчётов..."
+                 disabled={isSearching}
+                 style={{
+                   width: '100%',
+                   padding: '20px 60px 20px 24px',
+                   borderRadius: '12px',
+                   border: '2px solid transparent',
+                   background: 'white',
+                   fontSize: '16px',
+                   color: '#2D5A27',
+                   outline: 'none',
+                   boxShadow: '0 12px 24px rgba(45, 90, 39, 0.08)'
+                 }}
+               />
+               <button
+                 type="submit"
+                 disabled={isSearching}
+                 style={{
+                   position: 'absolute',
+                   right: '20px',
+                   top: '50%',
+                  transform: 'translateY(-50%)',
+                   background: 'none',
+                  border: 'none',
+                   cursor: isSearching ? 'default' : 'pointer',
+                   opacity: isSearching ? 0.5 : 1
+                 }}
+               >
+                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                   <circle cx="11" cy="11" r="7" stroke="#2D5A27" strokeWidth="2"/>
+                   <path d="M16 16L21 21" stroke="#2D5A27" strokeWidth="2" strokeLinecap="round"/>
+                 </svg>
+               </button>
+             </form>
+           </div>
+
+            {/* Результат поиска */}
+            {searchResult && (
+              <div style={{
+                marginTop: '30px',
+                padding: '24px',
+                background: 'white',
+                borderRadius: '16px',
+                border: '1px solid #A7C4A0',
+                textAlign: 'left',
+                boxShadow: '0 4px 12px rgba(45, 90, 39, 0.1)'
               }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <circle cx="11" cy="11" r="7" stroke="#2D5A27" strokeWidth="2"/>
-                  <path d="M16 16L21 21" stroke="#2D5A27" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
-              </button>
-            </div>
+                <h3 style={{ color: '#2D5A27', marginBottom: '12px' }}>📌 Ответ:</h3>
+                <p style={{ lineHeight: '1.6', color: '#1A2A1A', margin: 0 }}>
+                  {searchResult}
+                </p>
+              </div>
+            )}
 
             <div style={{ 
               marginTop: '24px', 
@@ -310,7 +372,6 @@ export default function HomepageFeatures() {
           </div>
         </div>
       </section>
-  
 
       {/* База знаний — 3 категории */}
       <section style={{ padding: '60px 0 100px', background: '#f9f7f3' }}>

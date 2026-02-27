@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-import Header from '../Header';
+import Header from '../Header';  // или '../Header.jsx' — зависит от структуры
 import Breadcrumbs from '../Breadcrumbs';
 
 export default function CategoryPage({ categoryName, articles, breadcrumbs }) {
