@@ -8,7 +8,7 @@ const config: Config = {
   favicon: 'img/favicon.ico',
 
   url: 'https://geodesist-online.vercel.app',
-  baseUrl: '/geodesist-online/',
+  baseUrl: '/',
 
   organizationName: 'Daria0104Isa',
   projectName: 'geodesist-online',
