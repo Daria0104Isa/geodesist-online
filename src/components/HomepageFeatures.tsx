@@ -156,9 +156,9 @@ export default function HomepageFeatures() {
               </span>
               <Link to="/knowledge/articles/gnss-setup" style={{ color: '#2D5A27', textDecoration: 'none' }}>Настройка GNSS</Link>
               <span style={{ color: '#D4DCCD' }}>•</span>
-              <Link to="/docs/coordinates" style={{ color: '#2D5A27', textDecoration: 'none' }}>Системы координат</Link>
+              <Link to="/knowledge/articles/coordinate-systems" style={{ color: '#2D5A27', textDecoration: 'none' }}>Системы координат</Link>
               <span style={{ color: '#D4DCCD' }}>•</span>
-              <Link to="/docs/iso-17123" style={{ color: '#2D5A27', textDecoration: 'none' }}>ISO 17123</Link>
+              <Link to="/knowledge/articles/iso-17123" style={{ color: '#2D5A27', textDecoration: 'none' }}>ISO 17123</Link>
             </div>
           </div>
         </div>

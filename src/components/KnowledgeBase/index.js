@@ -56,31 +56,31 @@ export default function KnowledgeBase() {
   ];
 
   const popularArticles = [
-    {
-      title: 'Установка и центрирование тахеометра',
-      category: 'Полевые методы',
-      readTime: 5,
-      link: '/docs/pribory/tacheometry'
-    },
-    {
-      title: 'Основы работы с GNSS-приемниками в RTK',
-      category: 'Основы оборудования',
-      readTime: 8,
-      link: '/docs/pribory/gnss-priemnik'
-    },
-    {
-      title: 'Построение геодезических сетей сгущения',
-      category: 'Теория и основы',
-      readTime: 12,
-      link: '/docs/metodiki/geodezicheskie-seti'
-    },
-    {
-      title: 'Уравнивание теодолитного хода',
-      category: 'Обработка данных',
-      readTime: 15,
-      link: '/docs/obrabotka/uravnivanie'
-    }
-  ];
+  {
+    title: 'Установка и центрирование тахеометра',
+    category: 'Полевые методы',
+    readTime: 5,
+    link: '/knowledge/articles/tacheometry-basics'  // ← статья есть
+  },
+  {
+    title: 'Основы работы с GNSS-приемниками в RTK',
+    category: 'Основы оборудования',
+    readTime: 8,
+    link: '/knowledge/articles/gnss-rtk'  // ← статья есть
+  },
+  {
+    title: 'Построение геодезических сетей сгущения',
+    category: 'Теория и основы',
+    readTime: 12,
+    link: '/knowledge/articles/geodetic-networks'  // ← статья есть
+  },
+  {
+    title: 'Уравнивание теодолитного хода',
+    category: 'Обработка данных',
+    readTime: 15,
+    link: '/knowledge/articles/adjustment'  // ← статья есть
+  }
+];
 
   return (
     <div style={{ backgroundColor: '#f9f7f3' }}>
