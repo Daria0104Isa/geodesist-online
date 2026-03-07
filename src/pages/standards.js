@@ -99,6 +99,7 @@ export default function StandardsPage() {
             <button
               key={cat.id}
               onClick={() => setFilter(cat.id)}
+              id={cat.id === 'gost' ? 'gost' : cat.id === 'snip' ? 'snip' : cat.id === 'sp' ? 'sp' : null}
               style={{
                 background: filter === cat.id ? '#2D5A27' : 'white',
                 color: filter === cat.id ? 'white' : '#2D5A27',
