@@ -217,13 +217,13 @@ export default function Community() {
           marginTop: '40px'
         }}>
           <h3 style={{ fontSize: '24px', color: '#2D5A27', marginBottom: '16px', fontWeight: 600 }}>
-            Хотите помочь систематизировать знания?
+            💡 Хотите поделиться своими идеями по улучшению сайта?
           </h3>
           <p style={{ color: '#6B776D', marginBottom: '24px', fontSize: '16px' }}>
             Пишите в Telegram — я открыт к идеям, правкам и новым разделам.
           </p>
           <Link 
-            to="https://t.me/GeodezistOnlineBot"
+            to="https://t.me/GeodezistOnlineBot?start=idea"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -240,7 +240,7 @@ export default function Community() {
               <path d="M22 2L11 13" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
               <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
             </svg>
-            Написать создателю
+            Написать автору
           </Link>
         </div>
       </div>
