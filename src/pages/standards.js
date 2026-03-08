@@ -87,8 +87,8 @@ export default function StandardsPage() {
           ГОСТы, СНиПы, СП и другие документы для геодезистов и строителей
         </p>
 
-        {/* Скрытые якоря для навигации по категориям */}
-        <div style={{ display: 'none' }}>
+        {/* Якоря для навигации по категориям */}
+        <div style={{ height: 0, overflow: 'hidden', position: 'absolute', top: '-100px' }}>
           <h2 id="gost">ГОСТы</h2>
           <h2 id="snip">СНиПы</h2>
           <h2 id="sp">СП</h2>
