@@ -59,7 +59,7 @@ function getArticlePath(title) {
   return `/knowledge/articles/${slug}`;
 }
 
-// Функция для определения категории по заголовку (улучшить под ваши данные)
+// Функция для определения категории по заголовку
 function getCategoryFromTitle(title) {
   const title_lower = title.toLowerCase();
   if (title_lower.includes('gnss') || title_lower.includes('тахеометр') || title_lower.includes('нивелир')) {
@@ -76,10 +76,29 @@ function getCategoryFromTitle(title) {
   return 'База знаний';
 }
 
+// Функция для очистки текста от HTML и JSX
+function cleanText(text) {
+  if (!text) return '';
+  
+  // Удаляем HTML-теги
+  let clean = text.replace(/<[^>]*>/g, ' ');
+  
+  // Удаляем JSX-стили (всё что между {{ и }})
+  clean = clean.replace(/\{\{[^}]*\}\}/g, ' ');
+  
+  // Удаляем markdown-подобные конструкции
+  clean = clean.replace(/[`*_#]/g, '');
+  
+  // Удаляем лишние пробелы
+  clean = clean.replace(/\s+/g, ' ').trim();
+  
+  return clean;
+}
+
 // Функция для извлечения короткого описания из текста
 function extractDescription(text, maxLength = 120) {
-  // Берем первые maxLength символов, убираем лишние пробелы
-  const clean = text.replace(/\s+/g, ' ').trim();
+  const clean = cleanText(text);
+  
   if (clean.length <= maxLength) return clean;
   return clean.substring(0, maxLength) + '...';
 }
@@ -128,9 +147,9 @@ export default async function handler(req, res) {
       title: item.title,
       category: getCategoryFromTitle(item.title),
       description: extractDescription(item.text),
-      readTime: Math.floor(item.text.length / 1000) + 5, // грубая оценка времени чтения
+      readTime: Math.floor(item.text.length / 1000) + 5,
       link: getArticlePath(item.title),
-      match: item.text.substring(0, 60) + '...' // первые символы как совпадение
+      match: extractDescription(item.text, 60) // используем ту же функцию очистки
     }));
     
     res.status(200).json({ 
