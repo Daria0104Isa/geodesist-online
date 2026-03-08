@@ -9,6 +9,7 @@ export default function SearchBar({ placeholder = "Поиск по базе зн
   const [error, setError] = useState('');
 
   const handleSearch = async (e) => {
+    console.log('🚀 handleSearch вызван, query:', query);
     e.preventDefault();
     if (!query.trim()) return;
 
