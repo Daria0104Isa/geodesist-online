@@ -35,9 +35,12 @@ export default function SearchBar({ placeholder = "Поиск по базе зн
       // Если API возвращает results, используем их
       if (data.results) {
         setResults(data.results);
+        console.log('✅ Найдено результатов:', data.results.length);
+        console.log('Первый результат:', data.results[0]);
       } else {
         // Если нет, пытаемся распарсить answer (старый формат)
         setAnswer(data.answer);
+        console.log('ℹ️ Старый формат ответа:', data.answer);
       }
     } catch (err) {
       setError(err.message || 'Произошла ошибка');
