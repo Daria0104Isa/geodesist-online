@@ -12,6 +12,10 @@ export default function Snip110296() {
       title="СНиП 11-02-96 - Инженерные изыскания для строительства" 
       description="Общие требования к организации и проведению инженерных изысканий для строительства. Заменён на СП 47.13330.2016."
     >
+      {/* Якорь для навигации */}
+      <div id="gost" style={{ position: 'absolute', top: '-100px' }}></div>
+
+      <Header />
       
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px 24px 0', width: '100%' }}>
         <Breadcrumbs 

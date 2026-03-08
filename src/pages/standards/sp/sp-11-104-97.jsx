@@ -12,6 +12,10 @@ export default function Sp1110497() {
       title="СП 11-104-97 - Инженерно-геодезические изыскания для строительства" 
       description="Правила выполнения инженерно-геодезических изысканий при строительстве зданий и сооружений. Действующий документ."
     >
+
+      {/* Якорь для навигации */}
+      <div id="gost" style={{ position: 'absolute', top: '-100px' }}></div>
+      
       <Header />
       
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px 24px 0', width: '100%' }}>

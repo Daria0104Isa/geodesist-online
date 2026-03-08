@@ -12,6 +12,9 @@ export default function GostR518722002() {
       title="ГОСТ Р 51872-2002 - Документация исполнительная геодезическая" 
       description="Правила выполнения и оформления исполнительной геодезической документации при строительстве зданий и сооружений."
     >
+      {/* Якорь для навигации */}
+      <div id="gost" style={{ position: 'absolute', top: '-100px' }}></div>
+      
       <Header />
       
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px 24px 0', width: '100%' }}>

@@ -12,6 +12,9 @@ export default function GOST2226876() {
       title="ГОСТ 22268-76 Геодезия. Термины и определения" 
       description="Настоящий стандарт устанавливает термины и определения основных понятий в области геодезии."
     >
+      {/* Якорь для навигации */}
+      <div id="gost" style={{ position: 'absolute', top: '-100px' }}></div>
+      
       <Header />
       
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px 24px 0', width: '100%' }}>

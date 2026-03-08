@@ -12,6 +12,9 @@ export default function GOST2643385() {
       title="ГОСТ 26433.0-85 - Система обеспечения точности в строительстве" 
       description="Система обеспечения точности геометрических параметров в строительстве. Правила выполнения измерений и контроля точности."
     >
+      {/* Якорь для навигации */}
+      <div id="gost" style={{ position: 'absolute', top: '-100px' }}></div>
+      
       <Header />
       
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px 24px 0', width: '100%' }}>

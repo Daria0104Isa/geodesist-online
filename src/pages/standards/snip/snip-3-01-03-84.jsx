@@ -12,6 +12,9 @@ export default function Snip3010384() {
       title="СНиП 3.01.03-84 - Геодезические работы в строительстве" 
       description="Правила производства геодезических работ при строительстве зданий и сооружений. Заменён на СП 126.13330.2012."
     >
+      {/* Якорь для навигации */}
+      <div id="gost" style={{ position: 'absolute', top: '-100px' }}></div>
+      
       <Header />
       
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px 24px 0', width: '100%' }}>
