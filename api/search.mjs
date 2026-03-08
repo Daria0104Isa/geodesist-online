@@ -76,26 +76,92 @@ function getCategoryFromTitle(title) {
   return 'База знаний';
 }
 
-// Функция для очистки текста от HTML, JSX и CSS-стилей
+// Функция для глубокой очистки текста от HTML, JSX и технического мусора
 function cleanText(text) {
   if (!text) return '';
   
-  // Удаляем HTML-теги
-  let clean = text.replace(/<[^>]*>/g, ' ');
+  let clean = text;
   
-  // Удаляем JSX-стили (всё что между {{ и }}) и объекты стилей
+  // 1. Удаляем все HTML-теги и их содержимое (включая таблицы)
+  clean = clean.replace(/<[^>]*>/g, ' ');
+  
+  // 2. Удаляем JSX-конструкции ({{...}} и {...})
   clean = clean.replace(/\{\{[^}]*\}\}/g, ' ');
-  clean = clean.replace(/\{[^{}]*\}/g, ' ');
+  clean = clean.replace(/\{[^}]*\}/g, ' ');
   
-  // Удаляем CSS-подобные конструкции (borderBottom, padding, и т.д.)
-  clean = clean.replace(/\b[a-zA-Z]+[A-Z][a-zA-Z]*:/g, ' ');
-  clean = clean.replace(/[a-zA-Z-]+:\s*[^;{}]+[;}]/g, ' ');
+  // 3. Удаляем CSS-свойства (все слова, за которыми следует двоеточие)
+  clean = clean.replace(/\b[a-zA-Z-]+:\s*[^;}]+\s*[;}]/g, ' ');
   
-  // Удаляем markdown-подобные конструкции
-  clean = clean.replace(/[`*_#\[\]\(\)]/g, '');
+  // 4. Удаляем технические слова из JSX/React
+  const techWords = [
+    'style', 'className', 'div', 'span', 'h1', 'h2', 'h3', 'p', 'ul', 'li',
+    'thead', 'tbody', 'tr', 'td', 'th', 'table', 'border', 'padding', 'margin',
+    'backgroundColor', 'borderRadius', 'fontSize', 'fontWeight', 'color',
+    'display', 'flex', 'grid', 'justifyContent', 'alignItems', 'gap',
+    'position', 'top', 'left', 'right', 'bottom', 'absolute', 'relative',
+    'borderBottom', 'borderTop', 'borderLeft', 'borderRight', 'borderColor',
+    'cursor', 'pointer', 'transition', 'boxShadow', 'hover', 'focus'
+  ];
   
-  // Удаляем множественные пробелы и точки
+  techWords.forEach(word => {
+    const regex = new RegExp(`\\b${word}\\b`, 'gi');
+    clean = clean.replace(regex, ' ');
+  });
+  
+  // 5. Удаляем остатки JS-синтаксиса (стрелки, фигурные скобки, и т.д.)
+  clean = clean.replace(/[{}[\]()=>]/g, ' ');
+  
+  // 6. Удаляем множественные пробелы и знаки препинания
   clean = clean.replace(/\s+/g, ' ').trim();
+  clean = clean.replace(/[^\w\sА-Яа-яЁё.,!?-]/g, '');
+  clean = clean.replace(/\.{2,}/g, '.');
+  clean = clean.replace(/\s+\./g, '.');
+  
+  // 7. Обрезаем слишком длинные последовательности без смысла
+  const words = clean.split(' ');
+  const meaningfulWords = words.filter(word => word.length > 2 || /^[а-яА-Я]{2,}$/.test(word));
+  
+  return meaningfulWords.join(' ').substring(0, 200);
+}
+
+// Функция для глубокой очистки текста от HTML, JSX и технического мусора
+function cleanText(text) {
+  if (!text) return '';
+  
+  let clean = text;
+  
+  // 1. Удаляем все HTML-теги
+  clean = clean.replace(/<[^>]*>/g, ' ');
+  
+  // 2. Удаляем JSX-конструкции ({{...}} и {...})
+  clean = clean.replace(/\{\{[^}]*\}\}/g, ' ');
+  clean = clean.replace(/\{[^}]*\}/g, ' ');
+  
+  // 3. Удаляем CSS-свойства
+  clean = clean.replace(/\b[a-zA-Z-]+:\s*[^;}]+\s*[;}]/g, ' ');
+  
+  // 4. Удаляем технические слова из JSX/React
+  const techWords = [
+    'style', 'className', 'div', 'span', 'h1', 'h2', 'h3', 'p', 'ul', 'li',
+    'thead', 'tbody', 'tr', 'td', 'th', 'table', 'border', 'padding', 'margin',
+    'backgroundColor', 'borderRadius', 'fontSize', 'fontWeight', 'color',
+    'display', 'flex', 'grid', 'justifyContent', 'alignItems', 'gap',
+    'position', 'top', 'left', 'right', 'bottom', 'absolute', 'relative',
+    'borderBottom', 'borderTop', 'borderLeft', 'borderRight', 'borderColor',
+    'cursor', 'pointer', 'transition', 'boxShadow', 'hover', 'focus'
+  ];
+  
+  techWords.forEach(word => {
+    const regex = new RegExp(`\\b${word}\\b`, 'gi');
+    clean = clean.replace(regex, ' ');
+  });
+  
+  // 5. Удаляем остатки JS-синтаксиса
+  clean = clean.replace(/[{}[\]()=>]/g, ' ');
+  
+  // 6. Очищаем от лишних символов
+  clean = clean.replace(/\s+/g, ' ').trim();
+  clean = clean.replace(/[^\w\sА-Яа-яЁё.,!?-]/g, '');
   clean = clean.replace(/\.{2,}/g, '.');
   
   return clean;
@@ -105,48 +171,16 @@ function cleanText(text) {
 function extractDescription(text, maxLength = 120) {
   const clean = cleanText(text);
   
+  // Если после очистки текст слишком короткий, берём предложение из исходного
+  if (clean.length < 30) {
+    const sentences = text.split(/[.!?]+/);
+    const firstSentence = sentences[0]?.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim() || '';
+    return firstSentence.substring(0, maxLength) + (firstSentence.length > maxLength ? '...' : '');
+  }
+  
   if (clean.length <= maxLength) return clean;
   return clean.substring(0, maxLength) + '...';
 }
-
-export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  const { query } = req.body;
-  
-  if (!query) {
-    return res.status(400).json({ error: 'Query is required' });
-  }
-
-  if (!MISTRAL_API_KEY) {
-    return res.status(500).json({ error: 'Mistral API key not configured' });
-  }
-
-  try {
-    const queryEmbedding = await getQueryEmbedding(query);
-    
-    const results = embeddings
-      .map(item => ({
-        ...item,
-        similarity: cosineSimilarity(queryEmbedding, item.embedding)
-      }))
-      .sort((a, b) => b.similarity - a.similarity)
-      .slice(0, 5);
-    
-    const seenTitles = new Set();
-    const uniqueResults = [];
-    
-    for (const item of results) {
-      if (!seenTitles.has(item.title)) {
-        seenTitles.add(item.title);
-        uniqueResults.push(item);
-      }
-      if (uniqueResults.length >= 3) break;
-    }
     
     // Формируем структурированные данные для карточек
     const formattedResults = uniqueResults.map(item => ({
