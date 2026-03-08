@@ -41,7 +41,7 @@ export default function CategoryPage({ categoryName, articles, breadcrumbs }) {
               <path d="M19 12H5" strokeWidth="2"/>
               <path d="M12 19L5 12L12 5" strokeWidth="2"/>
             </svg>
-            ← Назад к категориям
+            Назад к категориям
           </Link>
         </div>
 
