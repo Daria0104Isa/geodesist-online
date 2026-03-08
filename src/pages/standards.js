@@ -87,12 +87,26 @@ export default function StandardsPage() {
           ГОСТы, СНиПы, СП и другие документы для геодезистов и строителей
         </p>
 
-        {/* Якоря для навигации по категориям */}
-        <div style={{ height: 0, overflow: 'hidden', position: 'absolute', top: '-100px' }}>
-          <h2 id="gost">ГОСТы</h2>
-          <h2 id="snip">СНиПы</h2>
-          <h2 id="sp">СП</h2>
+        {/* Навигационные якоря для категорий */}
+        <div style={{ 
+          display: 'flex', 
+          gap: '24px', 
+          marginBottom: '20px',
+          padding: '10px 0',
+          borderBottom: '1px solid #D4DCCD'
+        }}>
+          <a href="#gost" style={{ color: '#2D5A27', textDecoration: 'none' }}>ГОСТы</a>
+          <a href="#snip" style={{ color: '#2D5A27', textDecoration: 'none' }}>СНиПы</a>
+          <a href="#sp" style={{ color: '#2D5A27', textDecoration: 'none' }}>СП</a>
         </div>
+
+        {/* Сами якоря */}
+        <div style={{ position: 'relative' }}>
+          <div id="gost" style={{ position: 'absolute', top: '-80px' }}></div>
+          <div id="snip" style={{ position: 'absolute', top: '-80px' }}></div>
+          <div id="sp" style={{ position: 'absolute', top: '-80px' }}></div>
+        </div> 
+
         {/* КАТЕГОРИИ — СЛЕВА */}
         <div style={{ 
           display: 'flex', 
