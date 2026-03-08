@@ -1,20 +1,15 @@
 import React from 'react';
+import './SearchResults.css';
 import Link from '@docusaurus/Link';
 
 export default function SearchResults({ results }) {
-  if (!results || results.length === 0) return null;
-
-  // Функция для получения цвета тега по категории
-  const getTagColor = (category) => {
-    const colors = {
-      'Теория и основы': '#2D5A27',
-      'Основы оборудования': '#A7C4A0',
-      'Полевые методы': '#E6B422',
-      'Обработка данных': '#5D7559',
-      'Справочник': '#6B776D'
-    };
-    return colors[category] || '#2D5A27';
-  };
+  console.log('SearchResults получил:', results);
+  console.log('Тип данных:', typeof results);
+  console.log('Длина:', results?.length);
+  
+  if (!results || results.length === 0) {
+    return <div style={{ background: 'yellow', padding: '20px' }}>Нет результатов (отладка)</div>;
+  }
 
   return (
     <div style={{
