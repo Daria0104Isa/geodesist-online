@@ -50,14 +50,38 @@ function cosineSimilarity(vecA, vecB) {
 
 // Функция для генерации пути к статье из заголовка
 function getArticlePath(title) {
-  // Конвертируем заголовок в URL-дружественный формат
   const slug = title
     .toLowerCase()
-    .replace(/[^a-zа-я0-9\s-]/g, '') // удаляем спецсимволы
-    .replace(/\s+/g, '-')             // пробелы в дефисы
-    .replace(/-+/g, '-');              // убираем лишние дефисы
+    .replace(/[^a-zа-я0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
   
   return `/knowledge/articles/${slug}`;
+}
+
+// Функция для определения категории по заголовку (улучшить под ваши данные)
+function getCategoryFromTitle(title) {
+  const title_lower = title.toLowerCase();
+  if (title_lower.includes('gnss') || title_lower.includes('тахеометр') || title_lower.includes('нивелир')) {
+    return 'Основы оборудования';
+  } else if (title_lower.includes('координат') || title_lower.includes('трансформац')) {
+    return 'Теория и основы';
+  } else if (title_lower.includes('съемк') || title_lower.includes('нивелирова')) {
+    return 'Полевые методы';
+  } else if (title_lower.includes('формул') || title_lower.includes('расчет')) {
+    return 'Расчёты';
+  } else if (title_lower.includes('стандарт') || title_lower.includes('гост')) {
+    return 'Стандарты';
+  }
+  return 'База знаний';
+}
+
+// Функция для извлечения короткого описания из текста
+function extractDescription(text, maxLength = 120) {
+  // Берем первые maxLength символов, убираем лишние пробелы
+  const clean = text.replace(/\s+/g, ' ').trim();
+  if (clean.length <= maxLength) return clean;
+  return clean.substring(0, maxLength) + '...';
 }
 
 export default async function handler(req, res) {
@@ -86,9 +110,8 @@ export default async function handler(req, res) {
         similarity: cosineSimilarity(queryEmbedding, item.embedding)
       }))
       .sort((a, b) => b.similarity - a.similarity)
-      .slice(0, 5); // берём 5 самых релевантных фрагментов
+      .slice(0, 5);
     
-    // Группируем по заголовкам (чтобы одна статья не дублировалась)
     const seenTitles = new Set();
     const uniqueResults = [];
     
@@ -97,27 +120,21 @@ export default async function handler(req, res) {
         seenTitles.add(item.title);
         uniqueResults.push(item);
       }
-      if (uniqueResults.length >= 3) break; // оставляем не больше 3 статей
+      if (uniqueResults.length >= 3) break;
     }
     
-    // Формируем ответ в виде списка ссылок
-    let answer = '';
-    if (uniqueResults.length > 0) {
-      answer = '🔍 **Похожие темы найдены в этих статьях:**\n\n';
-      uniqueResults.forEach(item => {
-        const articlePath = getArticlePath(item.title);
-        answer += `- [${item.title}](${articlePath})\n`;
-      });
-    } else {
-      answer = '😕 По вашему запросу ничего не найдено. Попробуйте переформулировать вопрос.';
-    }
+    // Формируем структурированные данные для карточек
+    const formattedResults = uniqueResults.map(item => ({
+      title: item.title,
+      category: getCategoryFromTitle(item.title),
+      description: extractDescription(item.text),
+      readTime: Math.floor(item.text.length / 1000) + 5, // грубая оценка времени чтения
+      link: getArticlePath(item.title),
+      match: item.text.substring(0, 60) + '...' // первые символы как совпадение
+    }));
     
     res.status(200).json({ 
-      answer,
-      results: uniqueResults.map(r => ({ 
-        title: r.title, 
-        path: getArticlePath(r.title) 
-      }))
+      results: formattedResults
     });
 
   } catch (error) {

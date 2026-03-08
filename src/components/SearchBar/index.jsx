@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import SearchResults from '../SearchResults'; // импортируем новый компонент
 
 export default function SearchBar({ placeholder = "Поиск по базе знаний..." }) {
   const [query, setQuery] = useState('');
   const [answer, setAnswer] = useState('');
+  const [results, setResults] = useState([]); // новое состояние для результатов
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -13,9 +15,9 @@ export default function SearchBar({ placeholder = "Поиск по базе зн
     setLoading(true);
     setError('');
     setAnswer('');
+    setResults([]); // очищаем предыдущие результаты
 
     try {
-      // Замените URL на ваш продакшн-адрес после деплоя
       const response = await fetch('https://geodesist-online.vercel.app/api/search', {
         method: 'POST',
         headers: {
@@ -30,7 +32,13 @@ export default function SearchBar({ placeholder = "Поиск по базе зн
         throw new Error(data.error || 'Ошибка запроса');
       }
 
-      setAnswer(data.answer);
+      // Если API возвращает results, используем их
+      if (data.results) {
+        setResults(data.results);
+      } else {
+        // Если нет, пытаемся распарсить answer (старый формат)
+        setAnswer(data.answer);
+      }
     } catch (err) {
       setError(err.message || 'Произошла ошибка');
     } finally {
@@ -97,7 +105,15 @@ export default function SearchBar({ placeholder = "Поиск по базе зн
         </div>
       )}
 
-      {answer && (
+      {/* Отображаем результаты поиска в новом дизайне */}
+      {results && results.length > 0 && (
+        <div style={{ marginTop: '30px' }}>
+          <SearchResults results={results} />
+        </div>
+      )}
+
+      {/* Старый формат на случай, если API ещё не обновлён */}
+      {answer && !results.length && (
         <div style={{
           marginTop: '20px',
           padding: '24px',
