@@ -12,12 +12,35 @@ export default function ArticlePage({
   content,
   relatedArticles 
 }) {
+  // Функции для определения ссылки и текста по категории
+  const getBackLink = (category) => {
+    const categoryMap = {
+      'Теория и основы': '/knowledge/teoriya',
+      'Основы оборудования': '/knowledge/oborudovanie',
+      'Полевые методы': '/knowledge/polevye-metody',
+      'Обработка данных': '/knowledge/obrabotka',
+      'Справочник': '/knowledge/spravochnik'
+    };
+    return categoryMap[category] || '/knowledge';
+  };
+
+  const getBackText = (category) => {
+    const textMap = {
+      'Теория и основы': 'Вернуться к теории',
+      'Основы оборудования': 'Вернуться к основам оборудования',
+      'Полевые методы': 'Вернуться к полевым методам',
+      'Обработка данных': 'Вернуться к обработке данных',
+      'Справочник': 'Вернуться к справочнику'
+    };
+    return textMap[category] || '← Вернуться к базе знаний';
+  };
+  
   return (
     <div style={{ backgroundColor: '#f9f7f3' }}>
       {/* Шапка (можно будет использовать общий Header) */}
       
       <article style={{ maxWidth: '850px', margin: '0 auto', padding: '0 24px' }}>
-        <Link to="/knowledge/teoriya" style={{
+        <Link to={getBackLink(category)} style={{
           display: 'inline-flex',
           alignItems: 'center',
           gap: '8px',
@@ -31,7 +54,7 @@ export default function ArticlePage({
             <path d="M19 12H5" strokeWidth="2"/>
             <path d="M12 19L5 12L12 5" strokeWidth="2"/>
           </svg>
-           Вернуться к теории
+          {getBackText(category)}
         </Link>
 
         <header style={{ marginBottom: '48px' }}>
