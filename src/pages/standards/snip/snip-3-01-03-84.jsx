@@ -14,7 +14,7 @@ export default function Snip3010384() {
     >
       {/* Якорь для навигации */}
       <div id="gost" style={{ position: 'absolute', top: '-100px' }}></div>
-      
+
       <Header />
       
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px 24px 0', width: '100%' }}>
@@ -22,7 +22,7 @@ export default function Snip3010384() {
           paths={[
             { name: 'Главная', link: '/' },
             { name: 'Стандарты', link: '/standards' },
-            { name: 'СНиПы', link: '/standards#snip' },
+            { name: 'СНиПы', link: '/standards' },
             { name: 'СНиП 3.01.03-84', isCurrent: true }
           ]} 
           containerStyle={{ padding: 0, margin: 0 }} 

@@ -14,7 +14,7 @@ export default function GostR518722002() {
     >
       {/* Якорь для навигации */}
       <div id="gost" style={{ position: 'absolute', top: '-100px' }}></div>
-      
+
       <Header />
       
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px 24px 0', width: '100%' }}>
@@ -22,7 +22,7 @@ export default function GostR518722002() {
           paths={[
             { name: 'Главная', link: '/' },
             { name: 'Стандарты', link: '/standards' },
-            { name: 'ГОСТы', link: '/standards#gost' },
+            { name: 'ГОСТы', link: '/standards' },
             { name: 'ГОСТ Р 51872-2002', isCurrent: true }
           ]} 
           containerStyle={{ padding: 0, margin: 0 }} 

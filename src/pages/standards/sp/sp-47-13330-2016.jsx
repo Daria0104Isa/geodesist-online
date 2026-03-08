@@ -14,7 +14,7 @@ export default function Sp47133302016() {
     >
       {/* Якорь для навигации */}
       <div id="gost" style={{ position: 'absolute', top: '-100px' }}></div>
-      
+
       <Header />
       
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px 24px 0', width: '100%' }}>
@@ -22,7 +22,7 @@ export default function Sp47133302016() {
           paths={[
             { name: 'Главная', link: '/' },
             { name: 'Стандарты', link: '/standards' },
-            { name: 'СП', link: '/standards#sp' },
+            { name: 'СП', link: '/standards' },
             { name: 'СП 47.13330.2016', isCurrent: true }
           ]} 
           containerStyle={{ padding: 0, margin: 0 }} 

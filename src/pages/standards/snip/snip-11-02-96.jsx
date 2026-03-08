@@ -16,13 +16,13 @@ export default function Snip110296() {
       <div id="gost" style={{ position: 'absolute', top: '-100px' }}></div>
 
       <Header />
-      
+
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px 24px 0', width: '100%' }}>
         <Breadcrumbs 
           paths={[
             { name: 'Главная', link: '/' },
             { name: 'Стандарты', link: '/standards' },
-            { name: 'СНиПы', link: '/standards#snip' },
+            { name: 'СНиПы', link: '/standards' },
             { name: 'СНиП 11-02-96', isCurrent: true }
           ]} 
           containerStyle={{ padding: 0, margin: 0 }} 
