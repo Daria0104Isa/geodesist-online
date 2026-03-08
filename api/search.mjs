@@ -76,21 +76,27 @@ function getCategoryFromTitle(title) {
   return 'База знаний';
 }
 
-// Функция для очистки текста от HTML и JSX
+// Функция для очистки текста от HTML, JSX и CSS-стилей
 function cleanText(text) {
   if (!text) return '';
   
   // Удаляем HTML-теги
   let clean = text.replace(/<[^>]*>/g, ' ');
   
-  // Удаляем JSX-стили (всё что между {{ и }})
+  // Удаляем JSX-стили (всё что между {{ и }}) и объекты стилей
   clean = clean.replace(/\{\{[^}]*\}\}/g, ' ');
+  clean = clean.replace(/\{[^{}]*\}/g, ' ');
+  
+  // Удаляем CSS-подобные конструкции (borderBottom, padding, и т.д.)
+  clean = clean.replace(/\b[a-zA-Z]+[A-Z][a-zA-Z]*:/g, ' ');
+  clean = clean.replace(/[a-zA-Z-]+:\s*[^;{}]+[;}]/g, ' ');
   
   // Удаляем markdown-подобные конструкции
-  clean = clean.replace(/[`*_#]/g, '');
+  clean = clean.replace(/[`*_#\[\]\(\)]/g, '');
   
-  // Удаляем лишние пробелы
+  // Удаляем множественные пробелы и точки
   clean = clean.replace(/\s+/g, ' ').trim();
+  clean = clean.replace(/\.{2,}/g, '.');
   
   return clean;
 }
