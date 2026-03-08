@@ -247,7 +247,7 @@ export default function GnssSetupArticle() {
       category: 'ОСНОВЫ ОБОРУДОВАНИЯ',
       description: 'Leica, Trimble, Sokkia — что выбрать для разных задач и бюджетов?',
       readTime: 12,
-      link: '/knowledge/equipment/gnss-comparison'
+      link: '/knowledge/articles/gnss-comparison'
     },
     {
       title: 'Системы координат: от WGS-84 до МСК',

@@ -64,7 +64,7 @@ const articles = [
     description: 'Методика сбора данных для архитектурных обмеров и реставрационных работ.',
     author: 'Петр Васильев',
     readTime: 10,
-    link: '/knowledge/articles/façade-survey'
+    link: '/knowledge/articles/facade-survey'
   }
 ];
 

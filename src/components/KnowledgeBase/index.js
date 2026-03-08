@@ -20,7 +20,7 @@ export default function KnowledgeBase() {
       icon: 'compass',
       count: 38,
       color: '#A7C4A0',
-      link: '/docs/category/полевые-методы'
+      link: '/knowledge/polevye-metody'
     },
     {
       title: 'Основы оборудования',
@@ -36,7 +36,7 @@ export default function KnowledgeBase() {
       icon: 'laptop',
       count: 31,
       color: '#5D7559',
-      link: '/docs/category/обработка'
+      link: '/knowledge/obrabotka'
     },
     {
       title: 'Справочник',
@@ -44,7 +44,7 @@ export default function KnowledgeBase() {
       icon: 'library',
       count: 54,
       color: '#2D5A27',
-      link: '/docs/category/справочник'
+      link: '/knowledge/spravochnik'
     },
     {
       title: 'Не нашли ответ?',
