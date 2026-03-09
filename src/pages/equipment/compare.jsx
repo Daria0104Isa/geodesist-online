@@ -205,7 +205,7 @@ export default function ComparePage() {
               {selectedItems.map(item => {
                 console.log('baseUrl:', baseUrl);
                 console.log('image path:', `${baseUrl}img/equipment/${item.id}.jpg`);
-                
+    
                 return (
                   <div key={item.id} style={{ textAlign: 'center' }}>
                     <div style={{
@@ -213,30 +213,40 @@ export default function ComparePage() {
                       borderRadius: '16px',
                       padding: '20px',
                       border: '1px solid rgba(167, 196, 160, 0.3)',
-                      marginBottom: '12px'
+                      marginBottom: '12px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      minHeight: '150px'
                     }}>
                       <img 
                         src={`${baseUrl}img/equipment/${item.id}.jpg`}
                         alt={item.name}
                         style={{
                           width: '100%',
-                          height: '150px',
-                          objectFit: 'contain',
-                          background: '#F0F4EF',
-                          borderRadius: '8px',
-                          padding: '8px'
+                          maxWidth: '200px',
+                          height: 'auto',
+                          maxHeight: '150px',
+                          objectFit: 'contain'
                         }}
                         onError={(e) => {
                           console.log('Failed to load:', e.target.src);
-                          e.target.onerror = null;
-                          // Используем абсолютный путь для заглушки
-                          e.target.src = '/geodesist-online/img/equipment/placeholder.jpg';
+                          // Тот же подход, что и в EquipmentSpecs
+                          e.target.onerror = () => {
+                            e.target.style.display = 'none';
+                            e.target.parentNode.innerHTML += `
+                              <div style="width:100%; height:150px; background:#F0F4EF; display:flex; align-items:center; justify-content:center; color:#2D5A27; border-radius:8px;">
+                                📷 ${item.name}
+                              </div>
+                            `;
+                          };
+                          e.target.src = `${baseUrl}img/equipment/placeholder.jpg`;
                         }}
                       />
                     </div>
                     <h3 style={{ color: '#2D5A27', marginBottom: '4px' }}>{item.name}</h3>
                     <p style={{ color: '#6B776D', fontSize: '14px', marginBottom: '8px' }}>{item.categoryName}</p>
-        
+            
                     {/* Бейдж с преимуществом */}
                     <div style={{
                       display: 'inline-block',
