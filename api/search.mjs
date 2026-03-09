@@ -76,7 +76,7 @@ function getCategoryFromTitle(title) {
   return 'База знаний';
 }
 
-// Функция для глубокой очистки текста от HTML, JSX и технического мусора
+// Функция для глубокой очистки текста
 function cleanText(text) {
   if (!text) return '';
   
@@ -92,18 +92,18 @@ function cleanText(text) {
   // 3. Удаляем CSS-свойства
   clean = clean.replace(/\b[a-zA-Z-]+:\s*[^;}]+\s*[;}]/g, ' ');
   
-  // 4. Удаляем технические слова из JSX/React
+  // 4. Удаляем React-импорты и экспорты
+  clean = clean.replace(/import\s+.*?from\s+['"].*?['"];?/g, ' ');
+  clean = clean.replace(/export\s+(default\s+)?(function|const|let|var)\s+\w+/g, ' ');
+  
+  // 5. Удаляем технические слова
   const techWords = [
+    'const', 'let', 'var', 'function', 'return', 'import', 'export', 'default',
     'style', 'className', 'div', 'span', 'h1', 'h2', 'h3', 'p', 'ul', 'li',
-    'thead', 'tbody', 'tr', 'td', 'th', 'table', 'border', 'padding', 'margin',
-    'backgroundColor', 'borderRadius', 'fontSize', 'fontWeight', 'color',
+    'thead', 'tbody', 'tr', 'td', 'th', 'table',
+    'backgroundColor', 'borderRadius', 'fontSize', 'fontWeight',
     'display', 'flex', 'grid', 'justifyContent', 'alignItems', 'gap',
-    'position', 'top', 'left', 'right', 'bottom', 'absolute', 'relative',
-    'borderBottom', 'borderTop', 'borderLeft', 'borderRight', 'borderColor',
-    'cursor', 'pointer', 'transition', 'boxShadow', 'hover', 'focus',
-    'Количество', 'измерений', 'каждой', 'контрольной', 'точке', 'менее', 'двух',
-    'Расхождение', 'между', 'результатами', 'повторных', 'измерений', 'должно', 'превышать',
-    'Средняя', 'квадратическая', 'погрешность', 'измерений', 'должна', 'превышать', 'допуска'
+    'position', 'absolute', 'relative', 'margin', 'padding', 'border'
   ];
   
   techWords.forEach(word => {
@@ -111,16 +111,22 @@ function cleanText(text) {
     clean = clean.replace(regex, ' ');
   });
   
-  // 5. Удаляем остатки JS-синтаксиса
+  // 6. Удаляем остатки JS-синтаксиса
   clean = clean.replace(/[{}[\]()=>]/g, ' ');
+  clean = clean.replace(/['"`]/g, ' ');
   
-  // 6. Удаляем множественные пробелы
+  // 7. Удаляем множественные пробелы
   clean = clean.replace(/\s+/g, ' ').trim();
   
-  // 7. Удаляем одиночные буквы и цифры (кроме целых слов)
+  // 8. Удаляем одиночные буквы и цифры
   clean = clean.replace(/\b[a-zA-Z0-9]{1,2}\b/g, ' ');
   
-  // 8. Финальная очистка
+  // 9. Удаляем слова, начинающиеся с < или содержащие = и :
+  clean = clean.split(' ')
+    .filter(word => !word.startsWith('<') && !word.includes('=') && !word.includes(':'))
+    .join(' ');
+  
+  // 10. Финальная очистка
   clean = clean.replace(/\s+/g, ' ').trim();
   
   return clean;
@@ -130,29 +136,41 @@ function cleanText(text) {
 function extractDescription(text, maxLength = 120) {
   const clean = cleanText(text);
   
-  // Если после очистки текст слишком короткий, берём предложение из исходного
-  if (clean.length < 30) {
-    // Пробуем найти первое предложение
-    const match = text.match(/[^.!?]*[.!?]/);
-    if (match) {
-      let firstSentence = match[0]
-        .replace(/<[^>]*>/g, ' ')
-        .replace(/\s+/g, ' ')
-        .trim();
-      
-      // Удаляем технический мусор из предложения
-      firstSentence = firstSentence
-        .replace(/\b(style|className|div|span|h1|h2|h3|p|ul|li)\b/g, ' ')
-        .replace(/\s+/g, ' ')
-        .trim();
-      
-      return firstSentence.substring(0, maxLength) + (firstSentence.length > maxLength ? '...' : '');
+  // Если текст слишком короткий или пустой
+  if (clean.length < 20) {
+    // Пробуем найти первое осмысленное предложение
+    const sentences = text.split(/[.!?]+/);
+    for (const sentence of sentences) {
+      const cleaned = cleanText(sentence);
+      if (cleaned.length > 20) {
+        return cleaned.substring(0, maxLength) + (cleaned.length > maxLength ? '...' : '');
+      }
     }
-    return 'Описание статьи';
+    return 'Практическое руководство по геодезическим работам';
   }
   
   if (clean.length <= maxLength) return clean;
   return clean.substring(0, maxLength) + '...';
+}
+
+// Функция для извлечения совпадения
+function extractMatch(text, maxLength = 60) {
+  const clean = cleanText(text);
+  
+  // Берём первую часть текста
+  const match = clean.substring(0, maxLength * 2);
+  
+  // Находим конец предложения
+  const sentenceMatch = match.match(/^.*?[.!?]/);
+  if (sentenceMatch) {
+    let sentence = sentenceMatch[0];
+    if (sentence.length > maxLength) {
+      sentence = sentence.substring(0, maxLength) + '...';
+    }
+    return sentence;
+  }
+  
+  return clean.substring(0, maxLength) + (clean.length > maxLength ? '...' : '');
 }
 
 export default async function handler(req, res) {
@@ -200,8 +218,8 @@ export default async function handler(req, res) {
       category: getCategoryFromTitle(item.title),
       description: extractDescription(item.text),
       readTime: Math.floor(item.text.length / 1000) + 5,
-      link: getArticlePath(item.title),
-      match: extractDescription(item.text, 60)
+     link: getArticlePath(item.title),
+      match: extractMatch(item.text, 60)
     }));
     
     res.status(200).json({ 
