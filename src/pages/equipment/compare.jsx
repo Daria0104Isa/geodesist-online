@@ -227,6 +227,7 @@ export default function ComparePage() {
                           padding: '8px'
                         }}
                         onError={(e) => {
+                          console.log('Failed to load:', e.target.src);
                           e.target.onerror = null;
                           e.target.src = `${baseUrl}img/equipment/placeholder.jpg`;
                         }}
