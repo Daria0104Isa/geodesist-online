@@ -229,7 +229,8 @@ export default function ComparePage() {
                         onError={(e) => {
                           console.log('Failed to load:', e.target.src);
                           e.target.onerror = null;
-                          e.target.src = `${baseUrl}img/equipment/placeholder.jpg`;
+                          // Используем абсолютный путь для заглушки
+                          e.target.src = '/geodesist-online/img/equipment/placeholder.jpg';
                         }}
                       />
                     </div>
