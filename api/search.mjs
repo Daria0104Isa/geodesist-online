@@ -100,7 +100,10 @@ function cleanText(text) {
     'display', 'flex', 'grid', 'justifyContent', 'alignItems', 'gap',
     'position', 'top', 'left', 'right', 'bottom', 'absolute', 'relative',
     'borderBottom', 'borderTop', 'borderLeft', 'borderRight', 'borderColor',
-    'cursor', 'pointer', 'transition', 'boxShadow', 'hover', 'focus'
+    'cursor', 'pointer', 'transition', 'boxShadow', 'hover', 'focus',
+    'Количество', 'измерений', 'каждой', 'контрольной', 'точке', 'менее', 'двух',
+    'Расхождение', 'между', 'результатами', 'повторных', 'измерений', 'должно', 'превышать',
+    'Средняя', 'квадратическая', 'погрешность', 'измерений', 'должна', 'превышать', 'допуска'
   ];
   
   techWords.forEach(word => {
@@ -111,23 +114,41 @@ function cleanText(text) {
   // 5. Удаляем остатки JS-синтаксиса
   clean = clean.replace(/[{}[\]()=>]/g, ' ');
   
-  // 6. Очищаем от лишних символов
+  // 6. Удаляем множественные пробелы
   clean = clean.replace(/\s+/g, ' ').trim();
-  clean = clean.replace(/[^\w\sА-Яа-яЁё.,!?-]/g, '');
-  clean = clean.replace(/\.{2,}/g, '.');
+  
+  // 7. Удаляем одиночные буквы и цифры (кроме целых слов)
+  clean = clean.replace(/\b[a-zA-Z0-9]{1,2}\b/g, ' ');
+  
+  // 8. Финальная очистка
+  clean = clean.replace(/\s+/g, ' ').trim();
   
   return clean;
 }
 
-// Функция для извлечения короткого описания из текста
+// Функция для извлечения короткого описания
 function extractDescription(text, maxLength = 120) {
   const clean = cleanText(text);
   
   // Если после очистки текст слишком короткий, берём предложение из исходного
   if (clean.length < 30) {
-    const sentences = text.split(/[.!?]+/);
-    const firstSentence = sentences[0]?.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim() || '';
-    return firstSentence.substring(0, maxLength) + (firstSentence.length > maxLength ? '...' : '');
+    // Пробуем найти первое предложение
+    const match = text.match(/[^.!?]*[.!?]/);
+    if (match) {
+      let firstSentence = match[0]
+        .replace(/<[^>]*>/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      
+      // Удаляем технический мусор из предложения
+      firstSentence = firstSentence
+        .replace(/\b(style|className|div|span|h1|h2|h3|p|ul|li)\b/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      
+      return firstSentence.substring(0, maxLength) + (firstSentence.length > maxLength ? '...' : '');
+    }
+    return 'Описание статьи';
   }
   
   if (clean.length <= maxLength) return clean;
