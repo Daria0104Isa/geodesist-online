@@ -337,7 +337,9 @@ export default function EquipmentPage() {
                     }}>
                       {selectedForCompare.includes(item.id) ? '✓' : '+'}
                     </span>
-                    <span>
+                    <span style={{
+                      color: selectedForCompare.includes(item.id) ? 'white' : '#2D5A27'  // ← добавить
+                    }}>
                       {selectedForCompare.includes(item.id) ? 'Добавлено' : 'Сравнить'}
                     </span>
                   </button>
