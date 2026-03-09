@@ -136,21 +136,55 @@ function cleanText(text) {
 function extractDescription(text, maxLength = 120) {
   const clean = cleanText(text);
   
-  // Если текст слишком короткий или пустой
-  if (clean.length < 20) {
-    // Пробуем найти первое осмысленное предложение
+  // Удаляем явный мусор в начале
+  let clean2 = clean.replace(/^[^а-яА-Яa-zA-Z]+/, ''); // удаляем символы в начале
+  
+  // Если после очистки текст слишком короткий или пустой
+  if (clean2.length < 20) {
+    // Пробуем найти первое осмысленное предложение на русском
     const sentences = text.split(/[.!?]+/);
     for (const sentence of sentences) {
-      const cleaned = cleanText(sentence);
-      if (cleaned.length > 20) {
-        return cleaned.substring(0, maxLength) + (cleaned.length > maxLength ? '...' : '');
+      // Ищем предложение, которое начинается с русской буквы
+      const match = sentence.match(/[А-Яа-я][^<>]+/);
+      if (match) {
+        let cleaned = match[0]
+          .replace(/<[^>]*>/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+        if (cleaned.length > 20) {
+          return cleaned.substring(0, maxLength) + (cleaned.length > maxLength ? '...' : '');
+        }
       }
     }
     return 'Практическое руководство по геодезическим работам';
   }
   
-  if (clean.length <= maxLength) return clean;
-  return clean.substring(0, maxLength) + '...';
+  // Убираем обрывки в начале
+  clean2 = clean2.replace(/^(ты|это|которые|const|let|var|function|return)\s+/i, '');
+  clean2 = clean2.replace(/^[^а-яА-Яa-zA-Z]+/, '');
+  
+  if (clean2.length <= maxLength) return clean2;
+  return clean2.substring(0, maxLength) + '...';
+}
+
+// Функция для извлечения совпадения
+function extractMatch(text, maxLength = 60) {
+  const clean = cleanText(text);
+  
+  // Убираем мусор в начале
+  let clean2 = clean.replace(/^[^а-яА-Яa-zA-Z]+/, '');
+  clean2 = clean2.replace(/^(ты|это|const|let|var)\s+/i, '');
+  
+  // Берём первую часть текста
+  const match = clean2.substring(0, maxLength);
+  
+  // Ищем конец слова
+  const lastSpace = match.lastIndexOf(' ');
+  if (lastSpace > maxLength * 0.7) {
+    return match.substring(0, lastSpace) + '...';
+  }
+  
+  return match + (clean2.length > maxLength ? '...' : '');
 }
 
 // Функция для извлечения совпадения
