@@ -1,9 +1,8 @@
 import React from 'react';
 import Layout from '@theme/Layout';
-import useBaseUrl from '@docusaurus/useBaseUrl';
 import { useLocation } from '@docusaurus/router';
 import Link from '@docusaurus/Link';
-import useBaseUrl from '@docusaurus/useBaseUrl';
+import useBaseUrl from '@docusaurus/useBaseUrl'; // ← оставить только этот
 import Header from '../../components/Header';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import BackToTop from '../../components/BackToTop';
