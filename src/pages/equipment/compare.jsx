@@ -220,7 +220,7 @@ export default function ComparePage() {
                       minHeight: '150px'
                     }}>
                       <img 
-                        src={`${baseUrl}img/equipment/${item.id}.jpg`}
+                        src={`/geodesist-online/img/equipment/${item.id}.jpg`}
                         alt={item.name}
                         style={{
                           width: '100%',
@@ -235,7 +235,7 @@ export default function ComparePage() {
                           // Предотвращаем бесконечный цикл
                           e.target.onerror = null;
   
-                          const fallbackSrc = `${baseUrl}img/equipment/placeholder.jpg`;
+                          const fallbackSrc = `/geodesist-online/img/equipment/placeholder.jpg`;
                           const currentSrc = e.target.src;
   
                           // Проверяем, не пробовали ли мы уже заглушку
