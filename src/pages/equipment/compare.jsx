@@ -71,7 +71,7 @@ export default function ComparePage() {
             <path d="M19 12H5" strokeWidth="2"/>
             <path d="M12 19L5 12L12 5" strokeWidth="2"/>
           </svg>
-          ← Вернуться в каталог
+          Вернуться в каталог
         </Link>
 
         <h1 style={{ fontSize: '48px', color: '#2D5A27', marginBottom: '16px' }}>
