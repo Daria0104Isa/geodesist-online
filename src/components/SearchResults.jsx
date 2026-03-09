@@ -11,6 +11,21 @@ export default function SearchResults({ results }) {
     return <div style={{ background: 'yellow', padding: '20px' }}>Нет результатов (отладка)</div>;
   }
 
+  // Функция для получения цвета тега по категории
+  const getTagColor = (category) => {
+    const colors = {
+      'Теория и основы': '#2D5A27',
+      'Основы оборудования': '#A7C4A0',
+      'Полевые методы': '#E6B422',
+      'Обработка данных': '#5D7559',
+      'Справочник': '#6B776D',
+      'Расчёты': '#E6B422',
+      'Стандарты': '#6B776D',
+      'База знаний': '#2D5A27'
+    };
+    return colors[category] || '#2D5A27';
+  };
+
   return (
     <div style={{
       background: 'white',
