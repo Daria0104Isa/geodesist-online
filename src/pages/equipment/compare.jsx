@@ -195,6 +195,11 @@ export default function ComparePage() {
           </div>
         ) : (
           <>
+
+
+            {console.log('baseUrl:', baseUrl)}
+            {console.log('image path:', `${baseUrl}img/equipment/${item.id}.jpg`)}
+            
             {/* Блок с изображениями и названиями */}
             <div style={{
               display: 'grid',
