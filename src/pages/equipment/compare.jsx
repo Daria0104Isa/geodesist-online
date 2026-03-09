@@ -2,7 +2,7 @@ import React from 'react';
 import Layout from '@theme/Layout';
 import { useLocation } from '@docusaurus/router';
 import Link from '@docusaurus/Link';
-import useBaseUrl from '@docusaurus/useBaseUrl'; // ← оставить только этот
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import Header from '../../components/Header';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import BackToTop from '../../components/BackToTop';
@@ -173,7 +173,7 @@ export default function ComparePage() {
         <h1 style={{ fontSize: '48px', color: '#2D5A27', marginBottom: '16px' }}>
           Сравнение оборудования
         </h1>
-        
+
         {selectedItems.length < 2 ? (
           <div style={{ textAlign: 'center', padding: '60px', background: '#F9F7F3', borderRadius: '16px' }}>
             <p style={{ fontSize: '18px', color: '#6B776D', marginBottom: '24px' }}>
@@ -195,11 +195,6 @@ export default function ComparePage() {
           </div>
         ) : (
           <>
-
-
-            {console.log('baseUrl:', baseUrl)}
-            {console.log('image path:', `${baseUrl}img/equipment/${item.id}.jpg`)}
-            
             {/* Блок с изображениями и названиями */}
             <div style={{
               display: 'grid',
@@ -207,48 +202,54 @@ export default function ComparePage() {
               gap: '24px',
               marginBottom: '32px'
             }}>
-              {selectedItems.map(item => (
-                <div key={item.id} style={{ textAlign: 'center' }}>
-                  <div style={{
-                    background: 'white',
-                    borderRadius: '16px',
-                    padding: '20px',
-                    border: '1px solid rgba(167, 196, 160, 0.3)',
-                    marginBottom: '12px'
-                  }}>
-                    <img 
-                      src={`${baseUrl}img/equipment/${item.id}.jpg`}
-                      alt={item.name}
-                      style={{
-                       width: '100%',
-                        height: '150px',
-                        objectFit: 'contain',
-                        background: '#F0F4EF',
-                        borderRadius: '8px',
-                        padding: '8px'
-                      }}
-                      onError={(e) => {
-                        e.target.src = `${baseUrl}img/equipment/placeholder.jpg`;
-                      }}
-                    />
+              {selectedItems.map(item => {
+                console.log('baseUrl:', baseUrl);
+                console.log('image path:', `${baseUrl}img/equipment/${item.id}.jpg`);
+                
+                return (
+                  <div key={item.id} style={{ textAlign: 'center' }}>
+                    <div style={{
+                      background: 'white',
+                      borderRadius: '16px',
+                      padding: '20px',
+                      border: '1px solid rgba(167, 196, 160, 0.3)',
+                      marginBottom: '12px'
+                    }}>
+                      <img 
+                        src={`${baseUrl}img/equipment/${item.id}.jpg`}
+                        alt={item.name}
+                        style={{
+                          width: '100%',
+                          height: '150px',
+                          objectFit: 'contain',
+                          background: '#F0F4EF',
+                          borderRadius: '8px',
+                          padding: '8px'
+                        }}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = `${baseUrl}img/equipment/placeholder.jpg`;
+                        }}
+                      />
+                    </div>
+                    <h3 style={{ color: '#2D5A27', marginBottom: '4px' }}>{item.name}</h3>
+                    <p style={{ color: '#6B776D', fontSize: '14px', marginBottom: '8px' }}>{item.categoryName}</p>
+        
+                    {/* Бейдж с преимуществом */}
+                    <div style={{
+                      display: 'inline-block',
+                      background: '#F0F4EF',
+                      padding: '4px 12px',
+                      borderRadius: '20px',
+                      fontSize: '12px',
+                      color: '#2D5A27',
+                      fontWeight: 500
+                    }}>
+                      ⭐ {getRecommendation(item)} баллов
+                    </div>
                   </div>
-                  <h3 style={{ color: '#2D5A27', marginBottom: '4px' }}>{item.name}</h3>
-                  <p style={{ color: '#6B776D', fontSize: '14px', marginBottom: '8px' }}>{item.categoryName}</p>
-      
-                  {/* Бейдж с преимуществом */}
-                  <div style={{
-                    display: 'inline-block',
-                    background: '#F0F4EF',
-                    padding: '4px 12px',
-                    borderRadius: '20px',
-                    fontSize: '12px',
-                    color: '#2D5A27',
-                    fontWeight: 500
-                  }}>
-                    ⭐ {getRecommendation(item)} баллов
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Таблица сравнения */}
