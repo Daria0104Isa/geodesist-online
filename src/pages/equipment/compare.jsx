@@ -1,5 +1,6 @@
 import React from 'react';
 import Layout from '@theme/Layout';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import { useLocation } from '@docusaurus/router';
 import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
@@ -215,7 +216,7 @@ export default function ComparePage() {
                       src={`${baseUrl}img/equipment/${item.id}.jpg`}
                       alt={item.name}
                       style={{
-                        width: '100%',
+                       width: '100%',
                         height: '150px',
                         objectFit: 'contain',
                         background: '#F0F4EF',
@@ -229,7 +230,7 @@ export default function ComparePage() {
                   </div>
                   <h3 style={{ color: '#2D5A27', marginBottom: '4px' }}>{item.name}</h3>
                   <p style={{ color: '#6B776D', fontSize: '14px', marginBottom: '8px' }}>{item.categoryName}</p>
-                  
+      
                   {/* Бейдж с преимуществом */}
                   <div style={{
                     display: 'inline-block',
