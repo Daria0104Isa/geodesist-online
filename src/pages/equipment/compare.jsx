@@ -231,16 +231,34 @@ export default function ComparePage() {
                         }}
                         onError={(e) => {
                           console.log('Failed to load:', e.target.src);
-                          // Тот же подход, что и в EquipmentSpecs
-                          e.target.onerror = () => {
-                            e.target.style.display = 'none';
-                            e.target.parentNode.innerHTML += `
-                              <div style="width:100%; height:150px; background:#F0F4EF; display:flex; align-items:center; justify-content:center; color:#2D5A27; border-radius:8px;">
-                                📷 ${item.name}
-                              </div>
-                            `;
-                          };
-                          e.target.src = `${baseUrl}img/equipment/placeholder.jpg`;
+  
+                          // Предотвращаем бесконечный цикл
+                          e.target.onerror = null;
+  
+                          const fallbackSrc = `${baseUrl}img/equipment/placeholder.jpg`;
+                          const currentSrc = e.target.src;
+  
+                          // Проверяем, не пробовали ли мы уже заглушку
+                          if (currentSrc.includes('placeholder.jpg') || currentSrc === fallbackSrc) {
+                            // Показываем текстовую заглушку
+                            const parentDiv = e.target.parentNode;
+                            if (parentDiv && parentDiv.parentNode) {
+                              e.target.style.display = 'none';
+      
+                              // Проверяем, нет ли уже такой заглушки
+                              if (!parentDiv.querySelector('.fallback-text')) {
+                                const textDiv = document.createElement('div');
+                                textDiv.className = 'fallback-text';
+                                textDiv.style.cssText = 'width:100%; height:150px; background:#F0F4EF; display:flex; align-items:center; justify-content:center; color:#2D5A27; border-radius:8px;';
+                                textDiv.innerHTML = `📷 ${item.name}`;
+                                parentDiv.appendChild(textDiv);
+                              }
+                            }
+                            return;
+                          }
+  
+                          // Пробуем загрузить заглушку
+                          e.target.src = fallbackSrc;
                         }}
                       />
                     </div>
