@@ -77,6 +77,11 @@ const equipmentData = [
     accuracy: '0.3 мм/км',
     weight: '2.8 кг',
     protection: 'IP55',
+    battery: 'До 12 часов',
+    software: 'Leica Geo Office',
+    measurementModes: 'Автоматический',
+    memory: '30 000 точек',
+    compensation: 'Двухосевой',
     description: 'Цифровой нивелир с электронным отсчётом',
   },
   {
@@ -88,6 +93,12 @@ const equipmentData = [
     accuracy: '0.4 мм/км',
     weight: '2.5 кг',
     protection: 'IP54',
+    battery: 'До 10 часов',
+    software: 'MAGNET Field',
+    measurementModes: 'Автоматический/Ручной',
+    memory: '10 000 точек',
+    compensation: 'Двухосевой',
+    manual: '/files/sokkia-sdl30-manual.pdf',
     description: 'Цифровой нивелир с памятью 10 000 точек',
   },
 ];
@@ -98,7 +109,7 @@ export default function EquipmentPage() {
   const [selectedForCompare, setSelectedForCompare] = useState([]);
   const baseUrl = useBaseUrl('');
 
-  const toggleCompare = (itemId) => { // ← перенесено внутрь
+  const toggleCompare = (itemId) => {
     setSelectedForCompare(prev => {
       if (prev.includes(itemId)) {
         return prev.filter(id => id !== itemId);
@@ -136,11 +147,9 @@ export default function EquipmentPage() {
         <div style={{ 
           display: 'flex', 
           justifyContent: 'center',
-          marginBottom: '40px',
-          marginTop: '0px',
           marginBottom: '20px'
         }}>
-          <div style={{ position: 'relative', width: '600px' }}>  {/* чуть шире */}
+          <div style={{ position: 'relative', width: '600px' }}>
             <input
               type="text"
               placeholder="Поиск по названию или бренду"
@@ -199,14 +208,13 @@ export default function EquipmentPage() {
           Геодезические приборы — характеристики, инструкции, обзоры
         </p>
 
-        {/* 🏷️ КАТЕГОРИИ — СЛЕВА (КАК СЕЙЧАС) */}
+        {/* 🏷️ КАТЕГОРИИ — СЛЕВА */}
         <div style={{ 
           display: 'flex', 
           gap: '12px', 
           flexWrap: 'wrap', 
           marginBottom: '40px',
           marginLeft: '100px'
-          // без justifyContent — будут прижаты влево
         }}>
           {categories.map(cat => (
             <button
@@ -257,25 +265,31 @@ export default function EquipmentPage() {
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-4px)';
                 e.currentTarget.style.boxShadow = '0 12px 24px rgba(45, 90, 39, 0.06)';
-                // Показываем кнопку при наведении
+                // Показываем кнопку при наведении (только если не выбрана)
                 const btn = e.currentTarget.querySelector('.compare-btn');
-                if (btn) btn.style.opacity = '1';
+                if (btn && !selectedForCompare.includes(item.id)) {
+                  btn.style.opacity = '1';
+                }
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = 'none';
-                // Скрываем кнопку
+                // Скрываем кнопку при уходе мыши (только если не выбрана)
                 const btn = e.currentTarget.querySelector('.compare-btn');
-                if (btn) btn.style.opacity = '0';
+                if (btn && !selectedForCompare.includes(item.id)) {
+                  btn.style.opacity = '0';
+                }
               }}>
+                
                 {/* Кнопка сравнения */}
                 <div className="compare-btn" style={{
                   position: 'absolute',
                   top: '10px',
                   right: '10px',
-                  opacity: 0,
+                  opacity: selectedForCompare.includes(item.id) ? 1 : 0,
                   transition: 'opacity 0.2s',
-                  zIndex: 10
+                  zIndex: 10,
+                  pointerEvents: selectedForCompare.includes(item.id) ? 'auto' : 'auto'
                 }}>
                   <button
                     onClick={(e) => {
@@ -284,8 +298,8 @@ export default function EquipmentPage() {
                       toggleCompare(item.id);
                     }}
                     style={{
-                      background: 'white',
-                      color: '#2D5A27', // зелёный текст
+                      background: selectedForCompare.includes(item.id) ? '#2D5A27' : 'white',
+                      color: selectedForCompare.includes(item.id) ? 'white' : '#2D5A27',
                       border: '1px solid #2D5A27',
                       borderRadius: '20px',
                       padding: '6px 14px',
@@ -296,21 +310,30 @@ export default function EquipmentPage() {
                       alignItems: 'center',
                       gap: '6px',
                       boxShadow: '0 2px 8px rgba(45, 90, 39, 0.1)',
-                      transition: 'all 0.2s'
+                      transition: 'background-color 0.2s, transform 0.2s'
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = '#F0F4EF';
-                      e.target.style.transform = 'scale(1.05)';
+                      if (!selectedForCompare.includes(item.id)) {
+                        e.target.style.backgroundColor = '#F0F4EF';
+                        e.target.style.transform = 'scale(1.05)';
+                      } else {
+                        e.target.style.backgroundColor = '#1A3C17';
+                        e.target.style.transform = 'scale(1.05)';
+                      }
                     }}
                     onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = 'white';
+                      if (selectedForCompare.includes(item.id)) {
+                        e.target.style.backgroundColor = '#2D5A27';
+                      } else {
+                        e.target.style.backgroundColor = 'white';
+                      }
                       e.target.style.transform = 'scale(1)';
                     }}
                   >
                     <span style={{ 
                       fontSize: '16px', 
                       fontWeight: 'bold',
-                      color: selectedForCompare.includes(item.id) ? '#2D5A27' : '#2D5A27'
+                      color: selectedForCompare.includes(item.id) ? 'white' : '#2D5A27'
                     }}>
                       {selectedForCompare.includes(item.id) ? '✓' : '+'}
                     </span>
@@ -320,6 +343,7 @@ export default function EquipmentPage() {
                   </button>
                 </div>
                 
+                {/* Изображение */}
                 <img 
                   src={`${baseUrl}img/equipment/${item.id}.jpg`}
                   alt={item.name}
@@ -334,14 +358,15 @@ export default function EquipmentPage() {
                   }}
                   onError={(e) => {
                     e.target.style.display = 'none';
-                    e.target.parentNode.innerHTML += `
-                      <div style="width:100%; height:180px; background:#F0F4EF; display:flex; align-items:center; justify-content:center; color:#2D5A27; border-radius:12px; margin-bottom:16px;">
-                        📷 ${item.name}
-                      </div>
-                    `;
+                    const parent = e.target.parentNode;
+                    const div = document.createElement('div');
+                    div.style.cssText = 'width:100%; height:180px; background:#F0F4EF; display:flex; align-items:center; justify-content:center; color:#2D5A27; border-radius:12px; margin-bottom:16px;';
+                    div.innerHTML = `📷 ${item.name}`;
+                    parent.insertBefore(div, e.target.nextSibling);
                   }}
                 />
 
+                {/* Информация о приборе */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                   <h3 style={{ fontSize: '20px', color: '#2D5A27', margin: 0, fontWeight: 600 }}>
                     {item.name}
@@ -362,6 +387,7 @@ export default function EquipmentPage() {
                   {item.description}
                 </p>
 
+                {/* Характеристики */}
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: '1fr 1fr',
@@ -398,113 +424,113 @@ export default function EquipmentPage() {
               </div>
             </Link>
           ))}
-          </div>
+        </div>
 
-          {/* Плавающая панель сравнения */}
-          {selectedForCompare.length > 0 && (
-            <div style={{
-              position: 'fixed',
-              bottom: '30px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              background: 'white',
-              borderRadius: '50px',
-             padding: '12px 24px',
-              boxShadow: '0 8px 24px rgba(45, 90, 39, 0.15)',
-              border: '1px solid rgba(167, 196, 160, 0.3)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '20px',
-              zIndex: 1000,
-              backdropFilter: 'blur(8px)',
-              backgroundColor: 'rgba(255, 255, 255, 0.95)'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <span style={{ color: '#2D5A27', fontWeight: 600, fontSize: '14px' }}>
-                  Выбрано: {selectedForCompare.length}
-                </span>
-                <div style={{ display: 'flex', gap: '8px' }}>
-                  {selectedForCompare.map(id => {
-                    const item = equipmentData.find(i => i.id === id);
-                    return (
-                      <div key={id} style={{
-                        background: '#F0F4EF',
-                        borderRadius: '30px',
-                        padding: '4px 12px',
-                        fontSize: '13px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '6px'
-                      }}>
-                        <span style={{ color: '#2D5A27', fontWeight: 500 }}>{item?.name}</span>
-                        <button
-                          onClick={() => toggleCompare(id)}
-                          style={{
-                            background: 'none',
-                            border: 'none',
-                            cursor: 'pointer',
-                            color: '#6B776D',
-                            fontSize: '16px',
-                            padding: '0 2px'
-                          }}
-                        >
-                          ×
-                        </button>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-    
-              <div style={{ display: 'flex', gap: '12px' }}>
-                <button
-                  onClick={() => {
-                    if (selectedForCompare.length >= 2) {
-                      // Переход на страницу сравнения
-                      window.location.href = `/equipment/compare?ids=${selectedForCompare.join(',')}`;
-                    } else {
-                      alert('Выберите минимум 2 прибора для сравнения');
-                    }
-                  }}
-                  style={{
-                    background: '#2D5A27',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '30px',
-                    padding: '8px 20px',
-                    fontSize: '14px',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    transition: '0.2s'
-                  }}
-                  onMouseEnter={(e) => e.target.style.backgroundColor = '#1A3C17'}
-                  onMouseLeave={(e) => e.target.style.backgroundColor = '#2D5A27'}
-                >
-                  Сравнить
-                </button>
-      
-                <button
-                  onClick={() => setSelectedForCompare([])}
-                  style={{
-                    background: 'white',
-                    color: '#6B776D',
-                    border: '1px solid #D4DCCD',
-                    borderRadius: '30px',
-                    padding: '8px 20px',
-                    fontSize: '14px',
-                    fontWeight: 500,
-                    cursor: 'pointer',
-                    transition: '0.2s'
-                  }}
-                  onMouseEnter={(e) => e.target.style.backgroundColor = '#F9F7F3'}
-                  onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
-                >
-                  Очистить
-                </button>
+        {/* Плавающая панель сравнения */}
+        {selectedForCompare.length > 0 && (
+          <div style={{
+            position: 'fixed',
+            bottom: '30px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            background: 'white',
+            borderRadius: '50px',
+            padding: '12px 24px',
+            boxShadow: '0 8px 24px rgba(45, 90, 39, 0.15)',
+            border: '1px solid rgba(167, 196, 160, 0.3)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '20px',
+            zIndex: 1000,
+            backdropFilter: 'blur(8px)',
+            backgroundColor: 'rgba(255, 255, 255, 0.95)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ color: '#2D5A27', fontWeight: 600, fontSize: '14px' }}>
+                Выбрано: {selectedForCompare.length}
+              </span>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                {selectedForCompare.map(id => {
+                  const item = equipmentData.find(i => i.id === id);
+                  return (
+                    <div key={id} style={{
+                      background: '#F0F4EF',
+                      borderRadius: '30px',
+                      padding: '4px 12px',
+                      fontSize: '13px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px'
+                    }}>
+                      <span style={{ color: '#2D5A27', fontWeight: 500 }}>{item?.name}</span>
+                      <button
+                        onClick={() => toggleCompare(id)}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          cursor: 'pointer',
+                          color: '#6B776D',
+                          fontSize: '16px',
+                          padding: '0 2px'
+                        }}
+                      >
+                        ×
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
             </div>
-          )}
+    
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button
+                onClick={() => {
+                  if (selectedForCompare.length >= 2) {
+                    window.location.href = `/equipment/compare?ids=${selectedForCompare.join(',')}`;
+                  } else {
+                    alert('Выберите минимум 2 прибора для сравнения');
+                  }
+                }}
+                style={{
+                  background: '#2D5A27',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '30px',
+                  padding: '8px 20px',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: '0.2s'
+                }}
+                onMouseEnter={(e) => e.target.style.backgroundColor = '#1A3C17'}
+                onMouseLeave={(e) => e.target.style.backgroundColor = '#2D5A27'}
+              >
+                Сравнить
+              </button>
+      
+              <button
+                onClick={() => setSelectedForCompare([])}
+                style={{
+                  background: 'white',
+                  color: '#6B776D',
+                  border: '1px solid #D4DCCD',
+                  borderRadius: '30px',
+                  padding: '8px 20px',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  transition: '0.2s'
+                }}
+                onMouseEnter={(e) => e.target.style.backgroundColor = '#F9F7F3'}
+                onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
+              >
+                Очистить
+              </button>
+            </div>
+          </div>
+        )}
         
+        {/* Сообщение, если ничего не найдено */}
         {filteredEquipment.length === 0 && (
           <div style={{
             textAlign: 'center',
@@ -517,6 +543,7 @@ export default function EquipmentPage() {
           </div>
         )}
       </div>
+      
       <CTABlock 
         title="Нужна помощь с выбором оборудования?"
         description="Задайте вопрос в Telegram-боте — наши эксперты помогут подобрать прибор под ваши задачи"

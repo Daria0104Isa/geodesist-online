@@ -9,7 +9,7 @@ export default function EquipmentSpecs({
   hideHeader = false,
   breadcrumbs,  // ← новый пропс
   brand, model, type, accuracy, range, weight, protection, battery, memory, display, software,
-  description, documentation, issues, compatibility, similarModels, image
+  description, documentation, issues, compatibility, similarModels, image, manual
 }) {
   const baseUrl = useBaseUrl('');
 
@@ -173,46 +173,6 @@ export default function EquipmentSpecs({
             </div>
           )}
 
-          {/* Документация */}
-          {documentation && documentation.length > 0 && (
-            <div style={{
-              background: 'white',
-              borderRadius: '16px',
-              padding: '32px',
-              marginBottom: '0px',
-              border: '1px solid rgba(167, 196, 160, 0.3)'
-            }}>
-              <h2 style={{ fontSize: '24px', color: '#2D5A27', marginBottom: '16px' }}>
-                📥 Документация
-              </h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {documentation.map((doc, idx) => (
-                  <a
-                    key={idx}
-                    href={doc.link}
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '8px',
-                      color: '#2D5A27',
-                      textDecoration: 'none',
-                      padding: '8px 16px',
-                      background: '#F9F7F3',
-                      borderRadius: '8px',
-                      width: 'fit-content'
-                    }}
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                      <path d="M4 17V19C4 19.5304 4.21071 20.0391 4.58579 20.4142C4.96086 20.7893 5.46957 21 6 21H18C18.5304 21 19.0391 20.7893 19.4142 20.4142C19.7893 20.0391 20 19.5304 20 19V17" strokeWidth="2"/>
-                      <path d="M12 3V15M12 15L9 12M12 15L15 12" strokeWidth="2"/>
-                    </svg>
-                    {doc.label}
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
-
           {/* Таблица неисправностей */}
           {issues && issues.length > 0 && (
             <div style={{
@@ -305,6 +265,56 @@ export default function EquipmentSpecs({
             </div>
           )}
 
+          {/* Руководство пользователя */}
+          {manual && (
+            <div style={{
+              background: 'white',
+              borderRadius: '16px',
+              padding: '32px',
+              marginBottom: '40px',
+              border: '1px solid rgba(167, 196, 160, 0.3)'
+            }}>
+              <h2 style={{ fontSize: '24px', color: '#2D5A27', marginBottom: '24px' }}>
+                📖 Руководство пользователя
+              </h2>
+    
+              <div style={{ textAlign: 'center' }}>
+                <a
+                  href={manual}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    padding: '14px 40px',
+                    backgroundColor: '#2D5A27',
+                    color: 'white',
+                    textDecoration: 'none',
+                    borderRadius: '40px',
+                    fontWeight: 600,
+                    fontSize: '17px',
+                    transition: 'all 0.2s'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = '#1A3C17';
+                    e.target.style.transform = 'translateY(-2px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = '#2D5A27';
+                    e.target.style.transform = 'translateY(0)';
+                  }}
+                >
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" strokeWidth="2"/>
+                    <polyline points="7 10 12 15 17 10" strokeWidth="2"/>
+                    <line x1="12" y1="15" x2="12" y2="3" strokeWidth="2"/>
+                  </svg>
+                  Скачать руководство (PDF)
+                </a>
+              </div>
+            </div>
+          )}
         </article>
         <BackToTop />
       </div>

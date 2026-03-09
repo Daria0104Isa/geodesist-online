@@ -6,12 +6,11 @@ import EquipmentSpecs from '../../../components/EquipmentSpecs';
 import BackToTop from '../../../components/BackToTop';
 import CTABlock from '../../../components/CTABlock';
 
-
 export default function LeicaLS10() {
   return (
     <Layout
-      title="Leica LS10 - Цифровой нивелир"
-      description="Цифровой нивелир Leica LS10 — точность 0.3 мм/км"
+      title="Leica LS10 - Цифровой нивелир" 
+      description="Цифровой нивелир Leica LS10 — точность 0.3 мм/км, память 30 000 измерений"
     >
       <Header />
 
@@ -32,29 +31,65 @@ export default function LeicaLS10() {
         brand="Leica"
         model="LS10"
         type="Цифровой нивелир"
+        
+        // Основные характеристики
         accuracy="0.3 мм/км"
-        weight="2.8 кг"
+        accuracyElectronic="0.3 мм/км"
+        accuracyStandard="1.0 мм/км"
+        accuracyOptical="2.0 мм/км"
+        
+        // Оптика
+        magnification="32x"
+        objectiveDiameter="36 мм"
+        range="1.8 - 110 м"
+        minFocusingDistance="0.6 м"
+        imageType="Прямое"
+        fieldOfView="3.5 м на 100 м"
+        
+        // Компенсатор
+        compensationType="Маятниковый с магнитным демпфером"
+        compensationRange="±9′"
+        compensationAccuracy="0.3″"
+        electronicLevel="Да"
+        
+        // Память и интерфейсы
+        memory="30 000 измерений"
+        memoryExpansion="USB до 32 ГБ"
+        interfaces="USB, USB хост, Bluetooth"
+        display="3.6″, QVGA (320×240), цветной сенсорный"
+        keyboard="28 клавиш с подсветкой"
+        
+        // Режимы работы
+        measurementModes="Электронные, оптические"
+        measurementTime="2.5 сек"
+        autoCorrection="Коллимация, кривизна Земли"
+        
+        // Физические характеристики
+        weight="3.7 кг"
+        dimensions="276×222×206 мм"
         protection="IP55"
-        battery="До 12 часов"
-        memory="100 000 точек"
-        display="Графический, подсветка"
+        tempRange="-20°C до +50°C"
+        storageTemp="-40°C до +70°C"
+        
+        // Питание
+        battery="10-12 ч"
+        batteryType="Li-ion 11.1 В, 2.8 А•ч (GEB331)"
+        
+        // Дополнительно
+        circularLevel="8′/2 мм"
+        magneticSensitivity="≤1″"
+        
         software="Leica Geo Office"
-        description="Leica LS10 — цифровой нивелир для высокоточного геометрического нивелирования. Автоматическое снятие отсчётов, запись данных и контроль допусков."
-        documentation={[
-          { label: 'Инструкция пользователя (PDF)', link: '/files/leica-ls10-manual.pdf' },
-          { label: 'Технические характеристики (PDF)', link: '/files/leica-ls10-specs.pdf' }
-        ]}
-        issues={[
-          { problem: 'Не видит рейку', cause: 'Блики на солнце', solution: 'Использовать тень на рейку' },
-          { problem: 'Ошибка компенсатора', cause: 'Сильный ветер', solution: 'Установить ветрозащиту' },
-          { problem: 'Не включается', cause: 'Разряд батареи', solution: 'Заменить элемент питания' }
-        ]}
-        compatibility={[
-          { title: 'ПО', items: ['Leica Geo Office', 'Leica Infinity'] },
-          { title: 'Рейки', items: ['Leica GSL', 'любой штрих-код'] },
-          { title: 'Экспорт', items: ['TXT', 'CSV', 'DXF'] }
-        ]}
+        
+        manual="/files/leica-ls10-manual.pdf"
+        
+        description={`Leica LS10 — высокоточный цифровой нивелир для геометрического нивелирования. 
+          Прибор обеспечивает точность 0.3 мм/км с инварными рейками и оснащен маятниковым компенсатором 
+          с магнитным демпфером. Цветной сенсорный дисплей и подсветка клавиш позволяют комфортно работать 
+          в любых условиях. Встроенная память на 30 000 измерений и USB-интерфейс обеспечивают быстрый 
+          экспорт данных.`}
       />
+      
       <CTABlock 
         title="Нужна помощь с выбором оборудования?"
         description="Задайте вопрос в Telegram-боте — наши эксперты помогут подобрать прибор под ваши задачи"
