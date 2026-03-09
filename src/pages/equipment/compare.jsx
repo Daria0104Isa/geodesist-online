@@ -132,6 +132,28 @@ export default function ComparePage() {
       </div>
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 24px' }}>
+        {/* Кнопка назад */}
+        <Link 
+          to="/equipment"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            color: '#2D5A27',
+            textDecoration: 'none',
+            fontSize: '16px',
+            marginBottom: '24px',
+            transition: 'color 0.2s'
+          }}
+          onMouseEnter={(e) => e.target.style.color = '#1A3C17'}
+          onMouseLeave={(e) => e.target.style.color = '#2D5A27'}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M19 12H5" strokeWidth="2"/>
+            <path d="M12 19L5 12L12 5" strokeWidth="2"/>
+          </svg>
+          Вернуться в каталог
+        </Link>
         <h1 style={{ fontSize: '48px', color: '#2D5A27', marginBottom: '16px' }}>
           Сравнение оборудования
         </h1>

@@ -279,26 +279,44 @@ export default function EquipmentPage() {
                 }}>
                   <button
                     onClick={(e) => {
-                      e.preventDefault(); // Чтобы не переходить по ссылке
-                      e.stopPropagation(); // Чтобы не срабатывал клик карточки
+                      e.preventDefault();
+                      e.stopPropagation();
                       toggleCompare(item.id);
                     }}
                     style={{
-                      background: selectedForCompare.includes(item.id) ? '#2D5A27' : 'white',
-                      color: selectedForCompare.includes(item.id) ? 'white' : '#2D5A27',
+                      background: 'white',
+                      color: '#2D5A27', // зелёный текст
                       border: '1px solid #2D5A27',
                       borderRadius: '20px',
-                      padding: '4px 12px',
-                      fontSize: '12px',
+                      padding: '6px 14px',
+                      fontSize: '13px',
                       fontWeight: 600,
                       cursor: 'pointer',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '4px',
-                      boxShadow: '0 2px 8px rgba(45, 90, 39, 0.1)'
+                      gap: '6px',
+                      boxShadow: '0 2px 8px rgba(45, 90, 39, 0.1)',
+                      transition: 'all 0.2s'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = '#F0F4EF';
+                      e.target.style.transform = 'scale(1.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = 'white';
+                      e.target.style.transform = 'scale(1)';
                     }}
                   >
-                    {selectedForCompare.includes(item.id) ? '✓ Добавлено' : '➕ Сравнить'}
+                    <span style={{ 
+                      fontSize: '16px', 
+                      fontWeight: 'bold',
+                      color: selectedForCompare.includes(item.id) ? '#2D5A27' : '#2D5A27'
+                    }}>
+                      {selectedForCompare.includes(item.id) ? '✓' : '+'}
+                    </span>
+                    <span>
+                      {selectedForCompare.includes(item.id) ? 'Добавлено' : 'Сравнить'}
+                    </span>
                   </button>
                 </div>
                 

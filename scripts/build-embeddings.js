@@ -1,130 +1,161 @@
-import 'dotenv/config';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Принудительно указываем путь к .env.local
-import { config } from 'dotenv';
-config({ path: path.resolve(process.cwd(), '.env.local') });
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Конфигурация
-// ВРЕМЕННО: вставляем ключ напрямую (потом уберём)
-const MISTRAL_API_KEY = process.env.MISTRAL_API_KEY
-
-// === ВРЕМЕННАЯ ОТЛАДКА ===
-console.log('🔍 ЗАГРУЖЕННЫЙ КЛЮЧ:');
-console.log('Длина ключа:', MISTRAL_API_KEY ? MISTRAL_API_KEY.length : 'ключ не найден');
-console.log('Первые 5 символов:', MISTRAL_API_KEY ? MISTRAL_API_KEY.substring(0, 5) : 'нет');
-console.log('Последние 5 символов:', MISTRAL_API_KEY ? MISTRAL_API_KEY.slice(-5) : 'нет');
-
-const CHUNK_SIZE = 500;
-const CHUNK_OVERLAP = 50;
-
-
-// Функция для получения эмбеддинга через прямой fetch
-async function getEmbedding(text) {
+async function getEmbedding(text, retryCount = 0) {
   try {
-    const response = await fetch('https://api.mistral.ai/v1/embeddings', {
+    const response = await fetch('https://lamhieu-lightweight-embeddings.hf.space/v1/embeddings', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${MISTRAL_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'mistral-embed',
+        model: 'bge-m3',
         input: [text]
       })
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`Mistral API error: ${response.status} - ${errorText}`);
+      
+      // Если ошибка 429 (rate limit), ждём и повторяем
+      if (response.status === 429 && retryCount < 3) {
+        console.log(`  ⏳ Лимит исчерпан, ждём 60 секунд... (попытка ${retryCount + 1}/3)`);
+        await new Promise(r => setTimeout(r, 60000)); // ждём 60 секунд
+        return getEmbedding(text, retryCount + 1);
+      }
+      
+      throw new Error(`Embedding API error: ${response.status} - ${errorText}`);
     }
 
     const data = await response.json();
     return data.data[0].embedding;
   } catch (error) {
-    console.error('Mistral API error:', error.message);
+    if (retryCount < 3) {
+      console.log(`  ⏳ Ошибка, пробуем снова через 5 сек... (попытка ${retryCount + 1}/3)`);
+      await new Promise(r => setTimeout(r, 5000));
+      return getEmbedding(text, retryCount + 1);
+    }
     throw error;
   }
 }
 
-function splitIntoChunks(text, title) {
-  const chunks = [];
-  for (let i = 0; i < text.length; i += CHUNK_SIZE - CHUNK_OVERLAP) {
-    const chunk = text.substring(i, i + CHUNK_SIZE);
-    if (chunk.length < 50) continue;
-    chunks.push({
-      title,
-      text: chunk,
-      start: i,
-      end: i + chunk.length
-    });
-  }
-  return chunks;
+function findContent(fileContent) {
+  // Паттерн 1: const content = ( <> ... </> );
+  const pattern1 = /const\s+content\s*=\s*\(\s*\)\s*=>\s*\(\s*<>\s*([\s\S]*?)<\/>\s*\);/;
+  const match1 = fileContent.match(pattern1);
+  if (match1) return match1[1];
+  
+  // Паттерн 2: const content = ( <> ... </> ) (без стрелочной функции)
+  const pattern2 = /const\s+content\s*=\s*\(\s*<>\s*([\s\S]*?)<\/>\s*\);/;
+  const match2 = fileContent.match(pattern2);
+  if (match2) return match2[1];
+  
+  // Паттерн 3: const content = ( ... ) (без JSX обёртки)
+  const pattern3 = /const\s+content\s*=\s*\(\s*([\s\S]*?)\s*\);/;
+  const match3 = fileContent.match(pattern3);
+  if (match3) return match3[1];
+  
+  return null;
+}
+
+function extractTextFromJSX(jsx) {
+  let text = jsx
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\{\{[^}]*\}\}/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return text;
 }
 
 async function main() {
   console.log('🔍 Начинаем индексацию статей...');
-
-  const articlesDir = path.join(__dirname, '../src/pages/knowledge/articles');
-  const files = fs.readdirSync(articlesDir)
-    .filter(f => f.endsWith('.jsx') || f.endsWith('.js'));
-
-  console.log(`📚 Найдено ${files.length} статей`);
-
-  const allChunks = [];
-
-  for (const file of files) {
-    const filePath = path.join(articlesDir, file);
-    let content = fs.readFileSync(filePath, 'utf-8');
-
-    const titleMatch = content.match(/title:\s*["']([^"']+)["']/);
-    const title = titleMatch ? titleMatch[1] : file.replace('.jsx', '');
-
-    const textLines = content.split('\n')
-      .filter(line => !line.includes('import ') && !line.includes('export '))
-      .join(' ')
-      .replace(/\s+/g, ' ')
-      .substring(0, 5000);
-
-    const chunks = splitIntoChunks(textLines, title);
-    console.log(`  ${file}: ${chunks.length} фрагментов`);
-    allChunks.push(...chunks);
+  
+  const metaPath = path.join(__dirname, '../data/articles-meta.json');
+  const metaData = JSON.parse(fs.readFileSync(metaPath, 'utf-8'));
+  
+  console.log(`📚 Найдено ${metaData.length} статей в метаданных`);
+  
+  const uniqueByFile = {};
+  metaData.forEach(item => {
+    uniqueByFile[item.fileName] = item;
+  });
+  
+  const uniqueMeta = Object.values(uniqueByFile);
+  console.log(`📚 Уникальных статей: ${uniqueMeta.length}`);
+  
+  // Загружаем уже существующие эмбеддинги, если есть
+  let embeddings = [];
+  const embeddingsPath = path.join(__dirname, '../data/embeddings.json');
+  if (fs.existsSync(embeddingsPath)) {
+    embeddings = JSON.parse(fs.readFileSync(embeddingsPath, 'utf-8'));
+    console.log(`📦 Загружено ${embeddings.length} существующих векторов`);
   }
-
-  console.log(`\n🧩 Всего фрагментов: ${allChunks.length}`);
-  console.log('⚡ Получаем эмбеддинги через Mistral...');
-
-  const results = [];
-  for (let i = 0; i < allChunks.length; i++) {
-    const chunk = allChunks[i];
+  
+  // Множество уже обработанных ID
+  const processedIds = new Set(embeddings.map(e => e.id));
+  
+  for (let i = 0; i < uniqueMeta.length; i++) {
+    const article = uniqueMeta[i];
+    
+    // Пропускаем уже обработанные
+    if (processedIds.has(article.id)) {
+      console.log(`\n⏭️ [${i+1}/${uniqueMeta.length}] ${article.title} — уже обработано`);
+      continue;
+    }
+    
+    console.log(`\n📄 [${i+1}/${uniqueMeta.length}] ${article.title}`);
+    
+    const filePath = path.join(__dirname, '../src/pages/knowledge/articles', article.fileName);
+    
+    if (!fs.existsSync(filePath)) {
+      console.log(`  ❌ Файл не найден: ${filePath}`);
+      continue;
+    }
+    
+    let fileContent = fs.readFileSync(filePath, 'utf-8');
+    const jsxContent = findContent(fileContent);
+    
+    if (!jsxContent) {
+      console.log(`  ❌ Не найден блок content`);
+      continue;
+    }
+    
+    const cleanText = extractTextFromJSX(jsxContent);
+    console.log(`  📏 Длина текста: ${cleanText.length} символов`);
+    
+    if (cleanText.length < 100) {
+      console.log(`  ❌ Текст слишком короткий`);
+      continue;
+    }
+    
     try {
-      const embedding = await getEmbedding(chunk.text);
-      results.push({
-        id: i,
-        title: chunk.title,
-        text: chunk.text,
+      console.log(`  ⚡ Получаем эмбеддинг...`);
+      const embedding = await getEmbedding(cleanText.substring(0, 3000));
+      
+      embeddings.push({
+        id: article.id,
         embedding
       });
-
-      if (i % 5 === 0) {
-        console.log(`  Прогресс: ${i}/${allChunks.length}`);
-      }
-
-      // Небольшая задержка, чтобы не превысить лимиты
-      await new Promise(r => setTimeout(r, 200));
+      
+      console.log(`  ✅ Вектор получен (${embedding.length} измерений)`);
+      
+      // Сохраняем после каждого успешного запроса
+      fs.writeFileSync(embeddingsPath, JSON.stringify(embeddings, null, 2));
+      
+      // Небольшая задержка между запросами
+      await new Promise(r => setTimeout(r, 1000));
+      
     } catch (err) {
-      console.error(`Ошибка для фрагмента ${i}:`, err.message);
+      console.error(`  ❌ Ошибка: ${err.message}`);
+      // Сохраняем то, что уже получили
+      fs.writeFileSync(embeddingsPath, JSON.stringify(embeddings, null, 2));
     }
   }
-
-  const outputPath = path.join(__dirname, '../data/embeddings.json');
-  fs.writeFileSync(outputPath, JSON.stringify(results, null, 2));
-
-  console.log(`\n✅ Готово! Сохранено ${results.length} векторов в data/embeddings.json`);
+  
+  console.log(`\n✅ Готово! Всего векторов: ${embeddings.length}`);
 }
 
 main().catch(console.error);
