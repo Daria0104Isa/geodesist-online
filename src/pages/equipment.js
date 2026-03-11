@@ -14,11 +14,60 @@ const equipmentData = [
     category: 'tacheometers',
     categoryName: 'Тахеометры',
     brand: 'Leica',
-    accuracy: '0.5"',
-    range: '>3500 м',
-    weight: '5.6 кг',
+    type: 'Роботизированный',
+  
+    // Основные характеристики
+    angularAccuracy: '0.5"',
+    rangePrism: '3500 м (10000 м LO режим)',
+    rangeNonPrism: '1000+ м',
+    accuracyPrism: '0.6 мм + 1 ppm',
+    accuracyNonPrism: '2 мм + 2 ppm',
+  
+    // Временные характеристики
+    measurementTimePrecise: '3-6 с',
+    measurementTimeFast: '2.4 с',
+  
+    // Центрирование и указатели
+    centeringType: 'Лазерный',
+    centeringAccuracy: '1.5 мм на 1.5 м',
+    sightIndicator: 'Есть',
+    targetIndicator: 'Есть',
+  
+    // Компенсатор
+    compensatorType: 'Двухосевой',
+    compensatorRange: '4′',
+  
+    // Зрительная труба
+    magnification: '30x',
+    minFocusingDistance: '1.7 м',
+  
+    // Питание
+    battery: '7-9 ч',
+    chargingTime: '2.5-3.5 ч',
+  
+    // Управление
+    keyboard: '37 клавиш, подсветка',
+    display: '5" WVGA, цветной сенсорный, двусторонний',
+    
+    // Интерфейсы
+    memory: '2 ГБ ОЗУ + SD-карта 1/8 ГБ',
+    interfaces: 'USB, RS232, Bluetooth',
+    
+    // Физические характеристики
+    weight: '7.7 кг',
+    dimensions: '—',
     protection: 'IP65',
-    description: 'Роботизированный тахеометр премиум-класса',
+    tempRange: '-20°C до +50°C',
+    
+    // ПО и форматы
+    software: 'Leica Captivate',
+    dataFormats: 'ASCII, DXF, XML, GSI',
+    country: 'Швейцария',
+    warranty: '1 год',
+    
+    manual: '/files/leica-ts60-manual.pdf',
+    
+    description: `Роботизированный тахеометр премиум-класса.`,
   },
   {
     id: 'sokkia-ix1001',
@@ -280,7 +329,25 @@ export default function EquipmentPage() {
                   btn.style.opacity = '0';
                 }
               }}>
-                
+
+                {/* Метка категории */}
+                <div style={{
+                  position: 'absolute',
+                  top: '10px',
+                  left: '10px',
+                  background: '#F0F4EF',
+                  padding: '4px 12px',
+                  borderRadius: '20px',
+                  fontSize: '12px',
+                  color: '#2D5A27',
+                  fontWeight: 500,
+                  zIndex: 10,
+                  opacity: 1,
+                  pointerEvents: 'none'
+                }}>
+                  {item.categoryName}
+                </div>
+
                 {/* Кнопка сравнения */}
                 <div className="compare-btn" style={{
                   position: 'absolute',

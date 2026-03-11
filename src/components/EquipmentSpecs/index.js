@@ -7,22 +7,58 @@ import Breadcrumbs from '../Breadcrumbs';  // ← добавить импорт
 
 export default function EquipmentSpecs({ 
   hideHeader = false,
-  breadcrumbs,  // ← новый пропс
-  brand, model, type, accuracy, range, weight, protection, battery, memory, display, software,
-  description, documentation, issues, compatibility, similarModels, image, manual
+  breadcrumbs,
+  brand, model, type, 
+  angularAccuracy, rangePrism, rangeNonPrism, accuracyPrism, accuracyNonPrism,
+  measurementTimePrecise, measurementTimeFast,
+  centeringType, centeringAccuracy, sightIndicator, targetIndicator,
+  compensatorType, compensatorRange,
+  magnification, minFocusingDistance,
+  battery, chargingTime,
+  keyboard, display,
+  memory, interfaces,
+  weight, protection, tempRange,
+  software, dataFormats, country, warranty,
+  description, manual
 }) {
   const baseUrl = useBaseUrl('');
 
-  // Формируем массив характеристик из пропсов
+  // Формируем массив характеристик
   const specs = [
-    { label: 'Точность', value: accuracy },
-    { label: 'Дальность', value: range },
+    // Основное (самое важное)
+    { label: 'Точность угловых измерений', value: angularAccuracy },
+    { label: 'Дальность на призму', value: rangePrism },
+    { label: 'Дальность без отражателя', value: rangeNonPrism },
+    { label: 'Точность на призму', value: accuracyPrism },
+    { label: 'Точность без отражателя', value: accuracyNonPrism },
+  
+    // Режимы работы
+    { label: 'Точный режим', value: measurementTimePrecise },
+    { label: 'Быстрый режим', value: measurementTimeFast },
+  
+    // Компенсатор и указатели
+    { label: 'Компенсатор', value: compensatorType ? `${compensatorType} (${compensatorRange})` : null },
+    { label: 'Створоуказатель', value: sightIndicator },
+    { label: 'Целеуказатель', value: targetIndicator },
+  
+    // Оптика
+    { label: 'Увеличение трубы', value: magnification },
+    { label: 'Мин. фокусировка', value: minFocusingDistance },
+  
+    // Питание и вес
+    { label: 'Время работы', value: battery },
     { label: 'Вес', value: weight },
     { label: 'Защита', value: protection },
-    { label: 'Время работы', value: battery },
-    { label: 'Память', value: memory },
+  
+    // Управление и память
     { label: 'Дисплей', value: display },
+    { label: 'Память', value: memory },
+    { label: 'Интерфейсы', value: interfaces },
+  
+    // ПО и гарантия
     { label: 'ПО', value: software },
+    { label: 'Страна производства', value: country },
+    { label: 'Гарантия', value: warranty },
   ].filter(spec => spec.value);
 
   const name = `${brand || ''} ${model || ''}`.trim() || 'Прибор';
@@ -35,7 +71,7 @@ export default function EquipmentSpecs({
         backgroundColor: '#f9f7f3', 
         minHeight: '100vh'
       }}>
-        <article style={{ padding: '40px 24px' }}>
+        <article style={{ padding: '40px 24px', maxWidth: '2200px', margin: '0 auto'  }}>
           
           {/* Хлебные крошки — теперь ПОД шапкой, НАД контентом */}
           {breadcrumbs && (
@@ -67,28 +103,31 @@ export default function EquipmentSpecs({
           {/* Заголовок и фото + характеристики */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
+            gridTemplateColumns: '1fr 2.5fr',
             gap: '40px',
-            marginBottom: '48px'
+            marginBottom: '48px',
+            alignItems: 'center'
           }}>
             
             {/* Левая колонка — фото */}
             <div style={{
               background: 'white',
               borderRadius: '16px',
-              padding: '24px',
+              padding: '1px',
               border: '1px solid rgba(167, 196, 160, 0.3)',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center'
+              justifyContent: 'center',
+              minHeight: '400px'
             }}>
               <img 
                 src={useBaseUrl(`/img/equipment/${brand?.toLowerCase()}-${model?.toLowerCase()}.jpg`)}
                 alt={name}
                 style={{
                   width: '100%',
-                  maxWidth: '400px',
+                  maxWidth: '700px',
                   height: 'auto',
+                  maxHeight: '380px',
                   objectFit: 'contain'
                 }}
                 onError={(e) => {
@@ -132,14 +171,14 @@ export default function EquipmentSpecs({
                   </h3>
                   <div style={{
                     display: 'grid',
-                    gridTemplateColumns: '1fr 1fr',
-                    gap: '16px'
+                    gridTemplateColumns: 'repeat(3, 1fr)',
+                    gap: '12px'
                   }}>
                     {specs.map((spec, idx) => (
                       <div key={idx} style={{
                         background: '#F9F7F3',
                         borderRadius: '8px',
-                        padding: '12px'
+                        padding: '10px'
                       }}>
                         <div style={{ color: '#6B776D', fontSize: '13px', marginBottom: '4px' }}>
                           {spec.label}
@@ -162,105 +201,14 @@ export default function EquipmentSpecs({
               borderRadius: '16px',
               padding: '32px',
               marginBottom: '0px',
-              border: '1px solid rgba(167, 196, 160, 0.3)'
+              border: '1px solid rgba(167, 196, 160, 0.3)',
+              width: '100%'
             }}>
               <h2 style={{ fontSize: '24px', color: '#2D5A27', marginBottom: '16px' }}>
                 📋 Описание
               </h2>
               <div style={{ color: '#1A2A1A', lineHeight: '1.7', fontSize: '16px' }}>
                 {description}
-              </div>
-            </div>
-          )}
-
-          {/* Таблица неисправностей */}
-          {issues && issues.length > 0 && (
-            <div style={{
-              background: 'white',
-              borderRadius: '16px',
-              padding: '32px',
-              marginBottom: '0px',
-              border: '1px solid rgba(167, 196, 160, 0.3)'
-            }}>
-              <h2 style={{ fontSize: '24px', color: '#2D5A27', marginBottom: '16px' }}>
-                🔧 Типовые неисправности
-              </h2>
-              <div style={{ overflowX: 'auto' }}>
-                <table style={{
-                  width: '100%',
-                  borderCollapse: 'collapse',
-                  fontSize: '15px'
-                }}>
-                  <thead>
-                    <tr style={{ background: '#F0F4EF' }}>
-                      <th style={{ padding: '12px', textAlign: 'left', border: '1px solid #D4DCCD' }}>Проблема</th>
-                      <th style={{ padding: '12px', textAlign: 'left', border: '1px solid #D4DCCD' }}>Причина</th>
-                      <th style={{ padding: '12px', textAlign: 'left', border: '1px solid #D4DCCD' }}>Решение</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {issues.map((issue, idx) => (
-                      <tr key={idx}>
-                        <td style={{ padding: '12px', border: '1px solid #D4DCCD' }}>{issue.problem}</td>
-                        <td style={{ padding: '12px', border: '1px solid #D4DCCD' }}>{issue.cause}</td>
-                        <td style={{ padding: '12px', border: '1px solid #D4DCCD' }}>{issue.solution}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-
-          {/* Совместимость */}
-          {compatibility && compatibility.length > 0 && (
-            <div style={{
-              background: 'white',
-              borderRadius: '16px',
-              padding: '32px',
-              marginBottom: '0px',
-              border: '1px solid rgba(167, 196, 160, 0.3)'
-            }}>
-              <h2 style={{ fontSize: '24px', color: '#2D5A27', marginBottom: '16px' }}>
-                📱 Совместимость
-              </h2>
-              <div style={{ color: '#1A2A1A', lineHeight: '1.7' }}>
-                {compatibility.map((section, idx) => (
-                  <div key={idx} style={{ marginBottom: '16px' }}>
-                    <strong>{section.title}:</strong> {section.items.join(', ')}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Похожие модели */}
-          {similarModels && similarModels.length > 0 && (
-            <div style={{
-              background: 'white',
-              borderRadius: '16px',
-              padding: '32px',
-              border: '1px solid rgba(167, 196, 160, 0.3)'
-            }}>
-              <h2 style={{ fontSize: '24px', color: '#2D5A27', marginBottom: '16px' }}>
-                🎯 Похожие модели
-              </h2>
-              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-                {similarModels.map((model, idx) => (
-                  <Link
-                    key={idx}
-                    to={model.link}
-                    style={{
-                      padding: '8px 16px',
-                      background: '#F9F7F3',
-                      borderRadius: '8px',
-                      color: '#2D5A27',
-                      textDecoration: 'none'
-                    }}
-                  >
-                    {model.name}
-                  </Link>
-                ))}
               </div>
             </div>
           )}

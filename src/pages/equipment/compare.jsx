@@ -17,12 +17,30 @@ const equipmentData = [
     category: 'tacheometers',
     brand: 'Leica',
     type: 'Роботизированный',
-    accuracy: '0.5"',
-    range: '>3500 м',
-    weight: '5.6 кг',
+    
+    angularAccuracy: '0.5″',
+    rangePrism: '3500 м (10000 м LO режим)',
+    rangeNonPrism: '1000+ м',
+    accuracyPrism: '0.6 мм + 1 ppm',
+    accuracyNonPrism: '2 мм + 2 ppm',
+    measurementTimePrecise: '3-6 с',
+    measurementTimeFast: '2.4 с',
+    centeringType: 'Лазерный',
+    sightIndicator: 'Есть',
+    targetIndicator: 'Есть',
+    compensatorType: 'Двухосевой',
+    magnification: '30x',
+    display: '5" WVGA, цветной сенсорный, двусторонний',
+    memory: '2 ГБ ОЗУ + SD-карта 1/8 ГБ',
+    interfaces: 'USB, RS232, Bluetooth',
     protection: 'IP65',
-    battery: 'До 8 часов',
+    weight: '7.7 кг',
+    battery: '7-9 ч',
+    tempRange: '-20°C до +50°C',
     software: 'Leica Captivate',
+    country: 'Швейцария',
+    warranty: '1 год',
+  
     description: 'Роботизированный тахеометр премиум-класса',
   },
   {
@@ -252,13 +270,31 @@ const getSpecs = () => {
     { key: 'battery', label: 'Время работы' },
     { key: 'software', label: 'ПО' },
   ];
-
-  if (allTacheometers) {
-    // Для тахеометров
+    if (allTacheometers) {
     return [
       { key: 'type', label: 'Тип' },
-      ...baseSpecs,
-      { key: 'range', label: 'Дальность' },
+      { key: 'angularAccuracy', label: 'Точность угловых измерений' },
+      { key: 'rangePrism', label: 'Дальность на призму' },
+      { key: 'rangeNonPrism', label: 'Дальность без отражателя' },
+      { key: 'accuracyPrism', label: 'Точность на призму' },
+      { key: 'accuracyNonPrism', label: 'Точность без отражателя' },
+      { key: 'measurementTimePrecise', label: 'Точный режим' },
+      { key: 'measurementTimeFast', label: 'Быстрый режим' },
+      { key: 'centeringType', label: 'Центрирование' },
+      { key: 'sightIndicator', label: 'Створоуказатель' },
+      { key: 'targetIndicator', label: 'Целеуказатель' },
+      { key: 'compensatorType', label: 'Компенсатор' },
+      { key: 'magnification', label: 'Увеличение трубы' },
+      { key: 'display', label: 'Дисплей' },
+      { key: 'memory', label: 'Память' },
+      { key: 'interfaces', label: 'Интерфейсы' },
+      { key: 'protection', label: 'Защита' },
+      { key: 'weight', label: 'Вес' },
+      { key: 'battery', label: 'Время работы' },
+      { key: 'tempRange', label: 'Рабочая температура' },
+      { key: 'software', label: 'ПО' },
+      { key: 'country', label: 'Страна производства' },
+      { key: 'warranty', label: 'Гарантия' },
     ];
   } else if (allLevels) {
     // Для нивелиров - РАСШИРЕННАЯ ВЕРСИЯ

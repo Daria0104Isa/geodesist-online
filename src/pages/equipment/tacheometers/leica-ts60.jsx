@@ -8,9 +8,9 @@ import CTABlock from '../../../components/CTABlock';
 
 export default function LeicaTS60() {
   return (
-    <Layout 
+    <Layout
       title="Leica TS60 - Роботизированный тахеометр" 
-      description="Роботизированный тахеометр Leica TS60 — характеристики, инструкции, обзоры"
+      description="Leica TS60 — точность 0.5″, дальность до 3500 м, безотражательный режим 1000 м"
     >
       <Header />
 
@@ -27,34 +27,66 @@ export default function LeicaTS60() {
       </div>
 
       <EquipmentSpecs
-        hideHeader={true}  // ← отключаем шапку внутри компонента
+        hideHeader={true}
         brand="Leica"
         model="TS60"
         type="Роботизированный тахеометр"
-        accuracy="0.5″"
-        range=">3500 м"
-        weight="5.6 кг"
+        
+        // Основные характеристики
+        angularAccuracy="0.5″"
+        rangePrism="3500 м (10000 м LO режим)"
+        rangeNonPrism="1000+ м"
+        accuracyPrism="0.6 мм + 1 ppm"
+        accuracyNonPrism="2 мм + 2 ppm"
+        measurementTimePrecise="3-6 с"
+        measurementTimeFast="2.4 с" 
+        
+        // Центрирование и указатели
+        centeringType="Лазерный"
+        centeringAccuracy="1.5 мм на 1.5 м"
+        sightIndicator="Есть"
+        targetIndicator="Есть"
+        
+        // Компенсатор
+        compensatorType="Двухосевой"
+        compensatorRange="4′"
+        
+        // Зрительная труба
+        magnification="30x"
+        minFocusingDistance="1.7 м"
+        
+        // Питание
+        battery="7-9 ч"
+        chargingTime="2.5-3.5 ч"
+        
+        // Управление
+        keyboard="37 клавиш, подсветка"
+        display='5" WVGA, цветной сенсорный, двусторонний'
+        
+        // Интерфейсы и память
+        memory="2 ГБ ОЗУ + SD-карта 1/8 ГБ"
+        interfaces="USB, RS232, Bluetooth"
+        
+        // Физические характеристики
+        weight="7.7 кг"
         protection="IP65"
-        battery="До 8 часов"
-        memory="32 ГБ"
-        display="Сенсорный, 5.7″"
+        tempRange="-20°C до +50°C"
+        
+        // ПО и форматы
         software="Leica Captivate"
-        description="Leica TS60 — флагманский роботизированный тахеометр для самых сложных задач. Обеспечивает высочайшую точность измерений и полностью автоматизированную работу. Ключевые особенности: технология PWM для точного измерения на любые расстояния, встроенный 4G-модем для удалённой работы, AutoHeight — автоматическое измерение высоты инструмента, SmartWDM — двусторонняя голосовая связь."
-        documentation={[
-          { label: 'Инструкция пользователя (PDF)', link: '/files/leica-ts60-manual.pdf' },
-          { label: 'Технические характеристики (PDF)', link: '/files/leica-ts60-specs.pdf' },
-          { label: 'Брошюра (PDF)', link: '/files/leica-ts60-brochure.pdf' }
-        ]}
-        issues={[
-          { problem: 'Не включается', cause: 'Разряжен аккумулятор', solution: 'Зарядить батарею' },
-          { problem: 'Ошибка компенсатора', cause: 'Вибрация при включении', solution: 'Перезапустить' },
-          { problem: 'Нет связи с контроллером', cause: 'Неверные настройки Bluetooth', solution: 'Перезагрузить устройства' }
-        ]}
-        compatibility={[
-          { title: 'Контроллеры', items: ['Leica CS20', 'CS35'] },
-          { title: 'ПО', items: ['Leica Captivate', 'Leica Infinity'] },
-          { title: 'Облако', items: ['Leica ConX'] }
-        ]}
+        dataFormats="ASCII, DXF, XML, GSI"
+        country="Швейцария"
+        warranty="1 год"
+        
+        issues={[]}
+
+        // Руководство пользователя
+        manual="/files/leica-ts60-manual.pdf"
+        
+        description={`Leica TS60 — роботизированный тахеометр премиум-класса с точностью угловых измерений 0.5″. 
+          Прибор обеспечивает дальность измерений до 3500 м на призму и до 1000 м в безотражательном режиме. 
+          Оснащен двухосевым компенсатором, лазерным центрированием и двусторонним сенсорным дисплеем 5″. 
+          Поддерживает работу с ПО Leica Captivate и широким спектром форматов данных.`}
       />
       
       <CTABlock 
