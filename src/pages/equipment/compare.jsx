@@ -17,29 +17,22 @@ const equipmentData = [
     category: 'tacheometers',
     brand: 'Leica',
     type: 'Роботизированный',
-    
+  
     angularAccuracy: '0.5″',
-    rangePrism: '3500 м (10000 м LO режим)',
+    rangePrism: '3500 м (10000 м LO)',
     rangeNonPrism: '1000+ м',
     accuracyPrism: '0.6 мм + 1 ppm',
     accuracyNonPrism: '2 мм + 2 ppm',
-    measurementTimePrecise: '3-6 с',
-    measurementTimeFast: '2.4 с',
-    centeringType: 'Лазерный',
-    sightIndicator: 'Есть',
-    targetIndicator: 'Есть',
     compensatorType: 'Двухосевой',
-    magnification: '30x',
-    display: '5" WVGA, цветной сенсорный, двусторонний',
-    memory: '2 ГБ ОЗУ + SD-карта 1/8 ГБ',
+    atr: 'ATRplus (1500 м)',
+    display: '5″ WVGA, цветной сенсорный, двусторонний',
     interfaces: 'USB, RS232, Bluetooth',
     protection: 'IP65',
     weight: '7.7 кг',
-    battery: '7-9 ч',
+    battery: '8 ч',
     tempRange: '-20°C до +50°C',
     software: 'Leica Captivate',
     country: 'Швейцария',
-    warranty: '1 год',
   
     description: 'Роботизированный тахеометр премиум-класса',
   },
@@ -50,12 +43,23 @@ const equipmentData = [
     category: 'tacheometers',
     brand: 'Sokkia',
     type: 'Роботизированный',
-    accuracy: '1"',
-    range: '3500 м',
-    weight: '5.2 кг',
+  
+    angularAccuracy: '1″',
+    rangePrism: '6000 м',
+    rangeNonPrism: '800 м',
+    accuracyPrism: '1.0 мм + 2 ppm',
+    accuracyNonPrism: '2.0 мм + 2 ppm',
+    compensatorType: 'Двухосевой жидкостный',
+    atr: 'Нет',
+    display: '4.3″ VWGA, цветной сенсорный',
+    interfaces: 'USB, RS232C, Bluetooth',
     protection: 'IP66',
-    battery: 'До 7 часов',
-    software: 'MAGNET Field',
+    weight: '5.8 кг',
+    battery: '4 ч',
+    tempRange: '-20°C до +50°C',
+    software: 'MAGNET Field On-Board',
+    country: 'Япония',
+  
     description: 'Роботизированный тахеометр с автофокусом',
   },
   {
@@ -64,13 +68,24 @@ const equipmentData = [
     categoryName: 'Тахеометры',
     category: 'tacheometers',
     brand: 'Trimble',
-    type: 'Механический',
-    accuracy: '1"',
-    range: '2500 м',
-    weight: '5.4 кг',
+    type: 'Роботизированный / Механический',
+  
+    angularAccuracy: '1″',
+    rangePrism: '2500 м (5500 м LO)',
+    rangeNonPrism: '1200 м (белая карта)',
+    accuracyPrism: '2 мм + 2 ppm',
+    accuracyNonPrism: '2 мм + 2 ppm',
+    compensatorType: 'Двухосевой центрированный',
+    atr: 'Autolock (700 м)',
+    display: 'Контроллер (опция)',
+    interfaces: '2.4 ГГц, USB, RS232, Bluetooth',
     protection: 'IP65',
-    battery: 'До 6 часов',
+    weight: '5.5 кг',
+    battery: '6.5 ч',
+    tempRange: '-20°C до +50°C',
     software: 'Trimble Access',
+    country: 'США',
+  
     description: 'Механический тахеометр с MagDrive',
   },
   // GNSS
@@ -278,15 +293,9 @@ const getSpecs = () => {
       { key: 'rangeNonPrism', label: 'Дальность без отражателя' },
       { key: 'accuracyPrism', label: 'Точность на призму' },
       { key: 'accuracyNonPrism', label: 'Точность без отражателя' },
-      { key: 'measurementTimePrecise', label: 'Точный режим' },
-      { key: 'measurementTimeFast', label: 'Быстрый режим' },
-      { key: 'centeringType', label: 'Центрирование' },
-      { key: 'sightIndicator', label: 'Створоуказатель' },
-      { key: 'targetIndicator', label: 'Целеуказатель' },
       { key: 'compensatorType', label: 'Компенсатор' },
-      { key: 'magnification', label: 'Увеличение трубы' },
+      { key: 'atr', label: 'Автофокус / ATR' },
       { key: 'display', label: 'Дисплей' },
-      { key: 'memory', label: 'Память' },
       { key: 'interfaces', label: 'Интерфейсы' },
       { key: 'protection', label: 'Защита' },
       { key: 'weight', label: 'Вес' },
@@ -294,7 +303,6 @@ const getSpecs = () => {
       { key: 'tempRange', label: 'Рабочая температура' },
       { key: 'software', label: 'ПО' },
       { key: 'country', label: 'Страна производства' },
-      { key: 'warranty', label: 'Гарантия' },
     ];
   } else if (allLevels) {
     // Для нивелиров - РАСШИРЕННАЯ ВЕРСИЯ
@@ -405,11 +413,12 @@ const specs = getSpecs();
           type: 'info',
           title: '💡 На что обратить внимание при сравнении тахеометров:',
           points: [
-            'Точность измерений (угловая и линейная) — ключевой параметр для ваших задач',
-            'Дальность безотражательных измерений важна для работы в сложных условиях',
-            'Роботизированные или механические модели',
-            'Совместимость с вашим текущим ПО и оборудованием',
-            'Условия работы: степень защиты IP и время автономной работы'
+            'Угловая точность (0.5", 1", 2", 5") — определяет класс прибора и область применения',
+            'Линейная точность и дальность на призму / без отражателя — влияют на качество и скорость полевых работ',
+            'Роботизированные модели (автоматическое наведение) vs механические (бюджетные, надёжные)',
+            'Наличие автофокуса / ATR — важный фактор производительности при работе в одиночку',
+            'Совместимость с вашим текущим ПО (Leica Captivate, Trimble Access, MAGNET Field)',
+            'Условия эксплуатации: степень защиты IP (пыль/влага), вес, время работы от батареи'
           ]
         };
       } else if (categories[0] === 'gnss') {
@@ -591,8 +600,23 @@ const specs = getSpecs();
               
               {/* Названия приборов под фото */}
               {selectedItems.map(item => (
-                <div key={item.id} style={{ textAlign: 'center', marginTop: '8px' }}>
-                  <h3 style={{ color: '#2D5A27', marginBottom: '4px' }}>{item.name}</h3>
+                <div key={item.id} style={{ textAlign: 'center', marginTop: '12px' }}>
+                  <Link 
+                    to={`/equipment/${item.category}/${item.id}`}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <h3 style={{ 
+                      color: '#2D5A27', 
+                      marginBottom: '4px',
+                      transition: 'color 0.2s',
+                      cursor: 'pointer'
+                    }}
+                    onMouseEnter={(e) => e.target.style.color = '#1A3C17'}
+                    onMouseLeave={(e) => e.target.style.color = '#2D5A27'}
+                    >
+                      {item.name}
+                    </h3>
+                  </Link>
                   <p style={{ color: '#6B776D', fontSize: '14px', marginBottom: '8px' }}>{item.categoryName}</p>
                   <div style={{
                     display: 'inline-block',
@@ -623,14 +647,25 @@ const specs = getSpecs();
               {/* Заголовки приборов в таблице */}
               {selectedItems.map(item => (
                 <div key={item.id} style={{ 
-                  padding: '10px 16px', // Уменьшен вертикальный отступ (было 16px 20px)
+                  padding: '10px 16px',
                   textAlign: 'center', 
                   background: '#F0F4EF',
                   borderBottom: '1px solid #D4DCCD',
                   fontWeight: 600, 
                   color: '#2D5A27'
                 }}>
-                  {item.name}
+                  <Link 
+                    to={`/equipment/${item.category}/${item.id}`}
+                    style={{ 
+                      color: '#2D5A27', 
+                      textDecoration: 'none',
+                      transition: 'color 0.2s'
+                    }}
+                    onMouseEnter={(e) => e.target.style.color = '#1A3C17'}
+                    onMouseLeave={(e) => e.target.style.color = '#2D5A27'}
+                  >
+                    {item.name}
+                  </Link>
                 </div>
               ))}
 

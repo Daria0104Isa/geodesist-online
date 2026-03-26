@@ -71,14 +71,63 @@ const equipmentData = [
   },
   {
     id: 'sokkia-ix1001',
-    name: 'Sokkia ix1001',
-    category: 'tacheometers',
+    name: 'Sokkia iX-1001',
     categoryName: 'Тахеометры',
+    category: 'tacheometers',
     brand: 'Sokkia',
-    accuracy: '1"',
-    range: '3500 м',
-    weight: '5.2 кг',
-    protection: 'IP66',
+    type: 'Роботизированный',
+  
+    // Основные характеристики
+    angularAccuracy: '1"',
+    rangePrism: '6000 м',
+    rangeNonPrism: '800 м',
+    rangeFilm: '500 м',
+  
+    // Точность измерений
+    accuracyPrism: '±1.0 мм + 2 ppm',
+    accuracyNonPrism: '±2.0 мм + 2 ppm',
+    accuracyFilm: '±2.0 мм + 2 ppm',
+  
+    // Центрирование и указатели
+    centeringType: 'Оптический',
+    sightIndicator: 'Есть',
+    targetIndicator: 'Есть',
+  
+    // Компенсатор
+    compensatorType: 'Двухосевой жидкостный',
+    compensatorRange: '6′',
+  
+    // Зрительная труба
+    magnification: '30x',
+    reticleIllumination: 'Есть',  // подсветка сетки нитей
+  
+    // Питание
+    battery: '4 ч',
+    chargingTime: '5.5 ч',
+  
+    // Управление
+    keyboard: '24 клавиши',
+    display: 'Цветной сенсорный VWGA, 4.3"',
+  
+    // Интерфейсы и память
+    memory: '1 ГБ',
+    interfaces: 'USB, RS232C, Bluetooth',
+    usbHost: 'USB флэш (до 8 ГБ)',
+  
+    // Физические характеристики
+    weight: '5.8 кг',
+    protection: 'IP65',
+    tempRange: '-20°C до +50°C',
+  
+    // ПО и форматы
+    software: 'MAGNET Field On-Board + Basic',
+    dataFormats: 'SOKKIA SDR33, TOPCON, DXF/DWG, ESRI Shape, TDS, LandXML, MOSS GENIO, CSV, Microstation',
+    country: 'Япония',
+    warranty: '1 год',
+  
+    // Управление наводкой
+    driveSystem: 'Сервопривод',
+  
     description: 'Роботизированный тахеометр с автофокусом',
   },
   {
@@ -87,10 +136,77 @@ const equipmentData = [
     category: 'tacheometers',
     categoryName: 'Тахеометры',
     brand: 'Trimble',
-    accuracy: '1"',
-    range: '2500 м',
-    weight: '5.4 кг',
+    type: 'Роботизированный / Механический',
+  
+    // Угловые измерения
+    angularAccuracy: '1"',
+    compensatorType: 'Двухосевой центрированный',
+    compensatorRange: '±5.4′',
+    
+    // Измерение расстояний (призма)
+    rangePrism: '2500 м (5500 м LO режим)',
+    accuracyPrism: '2 мм + 2 ppm',
+    measurementTimePrism: '1.2 с',
+    measurementTimePrismTrack: '0.4 с',
+  
+    // Безотражательные измерения
+    rangeNonPrism: '1200 м (белая карта), 600 м (серая карта)',
+    accuracyNonPrism: '2 мм + 2 ppm',
+    measurementTimeNonPrism: '1–5 с',
+    measurementTimeNonPrismTrack: '0.4 с',
+    
+    // Дальность и точность на плёнку
+    rangeFilm: '1200 м (фольга 60x60 мм)',
+    accuracyFilm: '2 мм + 2 ppm',
+    
+    // Зрительная труба
+    magnification: '30x',
+    aperture: '40 мм',
+    fieldOfView: '2.6 м на 100 м',
+    minFocusingDistance: '1.5 м',
+    reticleIllumination: 'Переменная (10 уровней)',
+    autofocus: 'Стандартная',
+    
+    // Камера
+    cameraResolution: '2048×1536 пикс',
+    digitalZoom: '4 уровня (1x, 2x, 4x, 8x)',
+    
+    // Центрирование и указатели
+    centeringType: 'Оптический',
+    sightIndicator: 'Есть',
+    targetIndicator: 'Есть',
+    
+    // Питание
+    battery: '6.5 ч',
+    chargingTime: '?',  // если есть в руководстве
+    
+    // Сервопривод
+    driveSystem: 'MagDrive',
+    rotationSpeed: '115 град/с',
+    
+    // Дисплей, память, интерфейсы
+    display: '?',  // если есть данные
+    memory: '?',
+    interfaces: '2.4 ГГц, USB, RS232, Bluetooth',
+    
+    // Физические характеристики
+    weight: '5.5 кг',
     protection: 'IP65',
+    tempRange: '-20°C до +50°C',
+    storageTemp: '-40°C до +70°C',
+    
+    // Robotic/Autolock
+    atrRange: '700 м (пассивные призмы)',
+    atrAccuracy: '<2 мм на 200 м',
+    gpsSearchTime: '15–30 с',
+    
+    // ПО
+    software: 'Trimble Access',
+    
+    // Страна и гарантия
+    country: 'США?',  // если есть в руководстве
+    warranty: '1 год',
+    
     description: 'Механический тахеометр с MagDrive',
   },
   // GNSS

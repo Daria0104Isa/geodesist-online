@@ -19,7 +19,7 @@ export default function EquipmentSpecs({
   memory, interfaces,
   weight, protection, tempRange,
   software, dataFormats, country, warranty,
-  description, manual
+  description, manual, documentation
 }) {
   const baseUrl = useBaseUrl('');
 
@@ -213,8 +213,8 @@ export default function EquipmentSpecs({
             </div>
           )}
 
-          {/* Руководство пользователя */}
-          {manual && (
+          {/* Документация */}
+          {(manual || (documentation && documentation.length > 0)) && (
             <div style={{
               background: 'white',
               borderRadius: '16px',
@@ -226,40 +226,71 @@ export default function EquipmentSpecs({
                 📖 Руководство пользователя
               </h2>
     
-              <div style={{ textAlign: 'center' }}>
-                <a
-                  href={manual}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    padding: '14px 40px',
-                    backgroundColor: '#2D5A27',
-                    color: 'white',
-                    textDecoration: 'none',
-                    borderRadius: '40px',
-                    fontWeight: 600,
-                    fontSize: '17px',
-                    transition: 'all 0.2s'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = '#1A3C17';
-                    e.target.style.transform = 'translateY(-2px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = '#2D5A27';
-                    e.target.style.transform = 'translateY(0)';
-                  }}
-                >
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" strokeWidth="2"/>
-                    <polyline points="7 10 12 15 17 10" strokeWidth="2"/>
-                    <line x1="12" y1="15" x2="12" y2="3" strokeWidth="2"/>
-                  </svg>
-                  Скачать руководство (PDF)
-                </a>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
+                {/* Если передан manual (один файл) */}
+                {manual && (
+                  <a
+                    href={manual}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      padding: '12px 24px',
+                      backgroundColor: '#2D5A27',
+                      color: 'white',
+                      textDecoration: 'none',
+                      borderRadius: '40px',
+                      fontWeight: 600,
+                      fontSize: '16px',
+                      width: 'fit-content',
+                      transition: 'all 0.2s'
+                    }}
+                    onMouseEnter={(e) => e.target.style.backgroundColor = '#1A3C17'}
+                    onMouseLeave={(e) => e.target.style.backgroundColor = '#2D5A27'}
+                  >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" strokeWidth="2"/>
+                      <polyline points="7 10 12 15 17 10" strokeWidth="2"/>
+                      <line x1="12" y1="15" x2="12" y2="3" strokeWidth="2"/>
+                    </svg>
+                    Скачать руководство (PDF)
+                  </a>
+                )}
+                
+                {/* Если передан documentation (массив файлов) */}
+                {documentation && documentation.map((doc, idx) => (
+                  <a
+                    key={idx}
+                    href={doc.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      padding: '12px 24px',
+                      backgroundColor: '#2D5A27',
+                      color: 'white',
+                      textDecoration: 'none',
+                      borderRadius: '40px',
+                      fontWeight: 600,
+                      fontSize: '16px',
+                      width: 'fit-content',
+                      transition: 'all 0.2s'
+                    }}
+                    onMouseEnter={(e) => e.target.style.backgroundColor = '#1A3C17'}
+                    onMouseLeave={(e) => e.target.style.backgroundColor = '#2D5A27'}
+                  >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" strokeWidth="2"/>
+                      <polyline points="7 10 12 15 17 10" strokeWidth="2"/>
+                      <line x1="12" y1="15" x2="12" y2="3" strokeWidth="2"/>
+                    </svg>
+                    {doc.label}
+                  </a>
+                ))}
               </div>
             </div>
           )}
