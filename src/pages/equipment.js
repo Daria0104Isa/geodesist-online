@@ -18,6 +18,7 @@ const equipmentData = [
   
     // Основные характеристики
     angularAccuracy: '0.5"',
+    accuracy: '0.5″',
     rangePrism: '3500 м (10000 м LO режим)',
     rangeNonPrism: '1000+ м',
     accuracyPrism: '0.6 мм + 1 ppm',
@@ -79,6 +80,7 @@ const equipmentData = [
   
     // Основные характеристики
     angularAccuracy: '1"',
+    accuracy: '1″',
     rangePrism: '6000 м',
     rangeNonPrism: '800 м',
     rangeFilm: '500 м',
@@ -140,6 +142,7 @@ const equipmentData = [
   
     // Угловые измерения
     angularAccuracy: '1"',
+    accuracy: '1″',
     compensatorType: 'Двухосевой центрированный',
     compensatorRange: '±5.4′',
     
