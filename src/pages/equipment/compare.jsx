@@ -37,7 +37,7 @@ const equipmentData = [
     description: 'Роботизированный тахеометр премиум-класса',
   },
   {
-    id: 'sokkia-ix1001',
+    id: 'sokkia-ix-1001',
     name: 'Sokkia iX-1001',
     categoryName: 'Тахеометры',
     category: 'tacheometers',
