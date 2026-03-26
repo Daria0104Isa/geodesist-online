@@ -592,24 +592,6 @@ export default function EquipmentPage() {
                       <span style={{ color: '#2D5A27', fontWeight: 500 }}>{item.accuracy}</span>
                     </div>
                   )}
-                  {item.range && (
-                    <div>
-                      <span style={{ color: '#6B776D' }}>Дальность: </span>
-                      <span style={{ color: '#2D5A27', fontWeight: 500 }}>{item.range}</span>
-                    </div>
-                  )}
-                  {item.weight && (
-                    <div>
-                      <span style={{ color: '#6B776D' }}>Вес: </span>
-                      <span style={{ color: '#2D5A27', fontWeight: 500 }}>{item.weight}</span>
-                    </div>
-                  )}
-                  {item.protection && (
-                    <div>
-                      <span style={{ color: '#6B776D' }}>Защита: </span>
-                      <span style={{ color: '#2D5A27', fontWeight: 500 }}>{item.protection}</span>
-                    </div>
-                  )}
                 </div>
               </div>
             </Link>
