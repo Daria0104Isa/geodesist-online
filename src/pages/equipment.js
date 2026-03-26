@@ -70,7 +70,7 @@ const equipmentData = [
     description: `Роботизированный тахеометр премиум-класса.`,
   },
   {
-    id: 'sokkia-ix-1001',
+    id: 'sokkia-ix1001',
     name: 'Sokkia iX-1001',
     categoryName: 'Тахеометры',
     category: 'tacheometers',
@@ -288,6 +288,11 @@ export default function EquipmentPage() {
     });
   };
 
+  const getImagePath = (item) => {
+    if (item.id === 'sokkia-ix1001') return `${baseUrl}img/equipment/sokkia-ix-1001.jpg`;
+    return `${baseUrl}img/equipment/${item.id}.jpg`;
+  };
+  
   const categories = [
     { id: 'all', name: 'Все' },
     { id: 'tacheometers', name: 'Тахеометры' },
